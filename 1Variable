@@ -1,0 +1,21 @@
+using System;
+
+namespace qwerty 
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int digit;
+            bool isPlay;
+            float digitWithPoint;
+            long longDigit;
+            ulong ulongDigit;
+            double digitWithPointLong;
+            char symbol;
+            string input;
+            byte b;
+            sbyte sb;
+        }
+    }
+}
