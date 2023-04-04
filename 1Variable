@@ -1,21 +1,21 @@
 using System;
 
-namespace qwerty 
+namespace qwerty
 {
     class Program
     {
         static void Main(string[] args)
         {
-            int digit;
+            int healthPoints;
             bool isPlay;
-            float digitWithPoint;
-            long longDigit;
-            ulong ulongDigit;
-            double digitWithPointLong;
-            char symbol;
+            float damage;
+            long playTime;
+            ulong score;
+            double money;
+            char mobType;
             string input;
-            byte b;
-            sbyte sb;
+            byte internetProtocolAddress;
+            sbyte fakeInternetProtocolAddress;
         }
     }
 }
