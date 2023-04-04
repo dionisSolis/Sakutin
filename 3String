@@ -1,0 +1,22 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string name, work, zodiac, years;
+
+            Console.Write("Здравствуйте! Введите следующие данные:\nИмя: ");
+            name = Console.ReadLine();
+            Console.Write("Возраст: ");
+            years = Console.ReadLine();
+            Console.Write("Знак зодиака: ");
+            zodiac = Console.ReadLine();
+            Console.Write("Где работаете (с предлогом): ");
+            work = Console.ReadLine();
+            Console.WriteLine($"\nВас зовут {name}, Вам {years}, Вы {zodiac} и работаете {work}");
+        }
+    }
+}
