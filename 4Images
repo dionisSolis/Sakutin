@@ -1,0 +1,16 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int images = 52, imagesInLine = 3, fullLines, imagesNotInLine;
+
+            fullLines = images / imagesInLine;
+            imagesNotInLine = images % imagesInLine;
+            Console.WriteLine($"Полностью заполненных рядов: {fullLines}\nОставишеся картинки: {imagesNotInLine}");
+        }
+    }
+}
