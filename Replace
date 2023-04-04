@@ -1,0 +1,21 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string firstInput, secondInput, stringToChange;
+
+            Console.Write("Введите что-нибудь\n1 ввод: ");
+            secondInput = Console.ReadLine();
+            Console.Write("2 ввод: ");
+            firstInput = Console.ReadLine();
+            stringToChange = secondInput;
+            secondInput = firstInput;
+            firstInput = stringToChange;
+            Console.WriteLine($"\n1){firstInput}\n2){secondInput}");
+        }
+    }
+}
