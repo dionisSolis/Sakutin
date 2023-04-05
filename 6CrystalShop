@@ -1,0 +1,21 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            double goldAmount;
+            int crystalAmount;
+            double crystalPrice = 1.5;
+
+            Console.Write("Введите Ваше количество золота: ");
+            goldAmount = int.Parse(Console.ReadLine());
+            Console.Write($"Один кристалл стоит: {crystalPrice} золота. Сколько кристаллов хотите купить: ");
+            crystalAmount = int.Parse(Console.ReadLine());
+            goldAmount -= (crystalAmount * crystalPrice);
+            Console.WriteLine($"\nИтого\nКоличество золота: {goldAmount}\nКоличество кристаллов: {crystalAmount}");
+        }
+    }
+}
