@@ -1,0 +1,72 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userInput = "";
+            string password = "";
+            string nickname = "";
+            double money = 0;
+            int level = 0;
+
+            while (userInput != "exit")
+            {
+                Console.WriteLine($"Личный кабинет\n\nИмя: {nickname}\nПароль: {password}\nДеньги: {money}\nУровень: {level}");
+                Console.Write("\nКоманды\n1)Изменить имя\n2)Изменить пароль\n3)Изменить кол-во денег\n4)Изменить уровень\nДля выхода введите exit\nВвод...");
+                userInput = Console.ReadLine().ToLower();
+
+                switch(userInput)
+                {
+                    case "1":
+                        Console.Clear();
+                        Console.Write("Смена  имени\nТекущее имя " + nickname + "\nВведите новое имя: ");
+                        nickname = Console.ReadLine();
+                        Console.WriteLine("\nУспешно!");
+                        break;
+                    case "2":
+                        Console.Clear();
+                        Console.Write("Смена пароля\nТекущий пароль " + password + "\nВведите новый пароль: ");
+                        password = Console.ReadLine();
+                        Console.WriteLine("\nУспешно!");
+                        break;
+                    case "3":
+                        Console.Clear();
+                        Console.Write("Смена  кол-ва денег\nТекущее кол-во " + money + "\nВведите новое кол-во: ");
+
+                        while (!double.TryParse(Console.ReadLine(), out money))
+                        {
+                            Console.Write("\nВведите корректное значение ");
+                        }
+
+                        Console.WriteLine("\nУспешно!");
+                        break;
+                    case "4":
+                        Console.Clear();
+                        Console.Write("Смена  уровня\nТекущий уровень " + level + "\nВведите новый уровень >= 0: ");
+
+                        while (!int.TryParse(Console.ReadLine(), out level) || level < 0)
+                        {
+                            Console.Write("\nВведите корректное значение ");
+                        }
+
+                        Console.WriteLine("\nУспешно!");
+                        break;
+                    case "exit":
+                        Console.Clear();
+                        Console.WriteLine("Всего доброго!");
+                        break;
+                    default:
+                        Console.WriteLine("\nТакой команды не существует!");
+                        break;
+                }
+
+                Console.WriteLine("\nДля продолжения нажмите любую клавишу");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+}
