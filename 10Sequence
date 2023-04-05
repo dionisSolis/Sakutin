@@ -1,0 +1,15 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            for (int digit = 5; digit < 100; digit+=7)
+            {
+                Console.Write(digit + " ");
+            }
+        }
+    }
+}
