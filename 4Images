@@ -6,10 +6,13 @@ namespace qwerty
     {
         static void Main(string[] args)
         {
-            int images = 52, imagesInLine = 3, fullLines, imagesNotInLine;
+            int imagesAll = 52;
+            int imagesInLine = 3;
+            int fullLines;
+            int imagesNotInLine;
 
-            fullLines = images / imagesInLine;
-            imagesNotInLine = images % imagesInLine;
+            fullLines = imagesAll / imagesInLine;
+            imagesNotInLine = imagesAll % imagesInLine;
             Console.WriteLine($"Полностью заполненных рядов: {fullLines}\nОставишеся картинки: {imagesNotInLine}");
         }
     }
