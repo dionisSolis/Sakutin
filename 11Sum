@@ -1,0 +1,24 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random rand = new Random();
+            int sumDigitsMod3Mod5 = 0;
+            int number = rand.Next(100);
+            
+            for (int i = 1; i <= number; i++)
+            {
+                if (i % 5 == 0 || i % 3 == 0)
+                {
+                    sumDigitsMod3Mod5+=i;
+                }
+            }
+
+            Console.WriteLine($"Сумма чисел, кратных или 3, или 5, до {number} равна {sumDigitsMod3Mod5}");
+        }
+    }
+}
