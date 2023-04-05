@@ -1,0 +1,30 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string stringToDraw;
+            string drawSymbol;
+
+            Console.Write("Введите символ для отрисовки: ");
+            drawSymbol = Console.ReadLine();
+            Console.Write("Введиет строку для отрисовки: ");
+            stringToDraw = Console.ReadLine();
+
+            for (int i = 0; i < stringToDraw.Length + 2; i++)
+            {
+                Console.Write(drawSymbol);
+            }
+
+            Console.WriteLine("\n" + drawSymbol + stringToDraw + drawSymbol);
+
+            for (int i = 0; i < stringToDraw.Length + 2; i++)
+            {
+                Console.Write(drawSymbol);
+            }
+        }
+    }
+}
