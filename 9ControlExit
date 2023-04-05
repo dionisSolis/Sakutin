@@ -1,0 +1,18 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userInput = " ";
+
+            while (userInput != "exit")
+            {
+                Console.WriteLine("Бесконечный цикл, пока не введете exit");
+                userInput = Console.ReadLine();
+            }
+        }
+    }
+}
