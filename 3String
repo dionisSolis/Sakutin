@@ -6,17 +6,20 @@ namespace qwerty
     {
         static void Main(string[] args)
         {
-            string name, work, zodiac, years;
+            string name;
+            string job;
+            string zodiacSign;
+            string ages;
 
             Console.Write("Здравствуйте! Введите следующие данные:\nИмя: ");
             name = Console.ReadLine();
             Console.Write("Возраст: ");
-            years = Console.ReadLine();
+            ages = Console.ReadLine();
             Console.Write("Знак зодиака: ");
-            zodiac = Console.ReadLine();
+            zodiacSign = Console.ReadLine();
             Console.Write("Где работаете (с предлогом): ");
-            work = Console.ReadLine();
-            Console.WriteLine($"\nВас зовут {name}, Вам {years}, Вы {zodiac} и работаете {work}");
+            job = Console.ReadLine();
+            Console.WriteLine($"\nВас зовут {name}, Вам {ages}, Вы {zodiacSign} и работаете {job}");
         }
     }
 }
