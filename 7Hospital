@@ -1,0 +1,20 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int peopleAmount;
+            int hours;
+            int minutes;
+
+            Console.Write("Введите кол-во людей в очереди: ");
+            peopleAmount = int.Parse(Console.ReadLine());
+            hours = peopleAmount * 10 / 60;
+            minutes = peopleAmount * 10 % 60;
+            Console.WriteLine($"Вы должны отстоять в очереди {hours} ч. {minutes} мин.");
+        }
+    }
+}
