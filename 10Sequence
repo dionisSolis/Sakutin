@@ -6,7 +6,11 @@ namespace qwerty
     {
         static void Main(string[] args)
         {
-            for (int digit = 5; digit < 100; digit+=7)
+            int firstDigit = 5;
+            int lastDigit = 96;
+            int stepToPlusDigit = 7;
+
+            for (int digit = firstDigit; digit <= lastDigit; digit += stepToPlusDigit)
             {
                 Console.Write(digit + " ");
             }
