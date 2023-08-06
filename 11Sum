@@ -7,18 +7,20 @@ namespace qwerty
         static void Main(string[] args)
         {
             Random rand = new Random();
-            int sumDigitsMod3Mod5 = 0;
+            int firstIntToDivision = 3;
+            int secondIntToDivision = 5;
+            int sumDigitsModDigitToDivision = 0;
             int number = rand.Next(100);
-            
-            for (int i = 1; i <= number; i++)
+
+            for (int i = 1; i <= number; i++) 
             {
-                if (i % 5 == 0 || i % 3 == 0)
+                if (i % firstIntToDivision == 0 || i % secondIntToDivision == 0)
                 {
-                    sumDigitsMod3Mod5+=i;
+                    sumDigitsModDigitToDivision += i;
                 }
             }
 
-            Console.WriteLine($"Сумма чисел, кратных или 3, или 5, до {number} равна {sumDigitsMod3Mod5}");
+            Console.WriteLine($"Сумма чисел, кратных или 3, или 5, до {number} равна {sumDigitsModDigitToDivision}");
         }
     }
 }
