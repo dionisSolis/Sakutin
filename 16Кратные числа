@@ -1,0 +1,31 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random rnd = new Random();
+            int n = rnd.Next(1, 27);
+            int cntThreeDigitNumbersModN = 0;
+
+            for (int i = 100; i < 1000; i++)
+            {
+                int digit = i;
+                
+                while (digit > 0)
+                {
+                    digit -= n;
+                }
+
+                if (digit == 0)
+                {
+                    cntThreeDigitNumbersModN++;
+                }
+            }
+
+            Console.WriteLine($"Кол-во 3ехзначных чисел, кратных {n} - {cntThreeDigitNumbersModN}");
+        }
+    }
+}
