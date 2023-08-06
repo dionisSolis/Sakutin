@@ -10,9 +10,9 @@ namespace qwerty
             int lastDigit = 96;
             int stepToPlusDigit = 7;
 
-            for (int digit = firstDigit; digit <= lastDigit; digit += stepToPlusDigit)
+            for (int i = firstDigit; i <= lastDigit; i += stepToPlusDigit)
             {
-                Console.Write(digit + " ");
+                Console.Write(i + " ");
             }
         }
     }
