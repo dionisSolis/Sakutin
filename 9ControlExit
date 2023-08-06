@@ -8,16 +8,16 @@ namespace qwerty
         static void Main(string[] args)
         {
             string userInput = " ";
-            bool exit = true;
+            bool isInputExit = false;
 
-            while (exit)
+            while (!isInputExit)
             {
                 Console.WriteLine("Бесконечный цикл, пока не введете exit");
                 userInput = Console.ReadLine();
 
                 if (userInput == "exit")
                 {
-                    exit = false;
+                    isInputExit = true;
                 }
             }
         }
