@@ -11,10 +11,11 @@ namespace qwerty
             int hoursQueue;
             int minutesQueue;
             int minutesInOneHour = 60;
+            int timeToPassOnePerson = 10;
 
             Console.Write("Введите кол-во людей в очереди: ");
             peopleAmount = int.Parse(Console.ReadLine());
-            allMinutesQueue = peopleAmount * 10;
+            allMinutesQueue = peopleAmount * timeToPassOnePerson;
             hoursQueue = allMinutesQueue / minutesInOneHour;
             minutesQueue = allMinutesQueue % minutesInOneHour;
             Console.WriteLine($"Вы должны отстоять в очереди {hoursQueue} ч. {minutesQueue} мин.");
