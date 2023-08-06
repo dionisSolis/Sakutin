@@ -1,0 +1,43 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string password = "qwerty123456";
+            string userInput;
+            int attempts = 0;
+
+            while (attempts != 3)
+            {
+                attempts++;
+
+                Console.Clear();
+                Console.Write($"Попытка {attempts}/3\nВведите пароль: ");
+                userInput = Console.ReadLine(); 
+
+                if (userInput == password)
+                {
+                    Console.WriteLine("\nПароль введен верно! Секретное сообщение выведено");
+                    break;
+                }
+                else
+                {
+                    if (attempts == 3)
+                    {
+                        Console.WriteLine("\nПопытки закончились, завершение программы");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nПароль введен неверно, попробуйте еще раз!");
+                    }
+                }
+
+                Console.WriteLine("\n\nНажмите любую кнопку для обновления...");
+                Console.ReadKey();
+            }
+        }
+    }
+}
