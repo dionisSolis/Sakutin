@@ -1,0 +1,27 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random rnd = new Random();
+            int digit = rnd.Next(10000);
+            int powerOfTwo = 1;
+            int twoInPowerOfTwo = 2;
+
+            for (int i = 0; i < digit; i++) 
+            {
+                if (twoInPowerOfTwo > digit)
+                {
+                    Console.WriteLine($"Для числа {digit} будет 2 в степени {powerOfTwo}, то есть {twoInPowerOfTwo}. {digit} < {twoInPowerOfTwo}");
+                    break;
+                }
+
+                powerOfTwo++;
+                twoInPowerOfTwo *= 2;
+            }
+        }
+    }
+}
