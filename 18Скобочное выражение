@@ -1,0 +1,47 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userInput;
+            int cntOpenBrackets = 0;
+            int cntCloseBrackets = 0;
+            int maxDeepBrackets = 0;
+
+            Console.Write("Введите строку из скобок: ");
+            userInput = Console.ReadLine();
+
+            foreach (var symbol in userInput) 
+            { 
+                switch (symbol)
+                {
+                    case '(':
+                        cntOpenBrackets++;
+                        break;
+                    case ')':
+                        cntCloseBrackets++;
+                        break;
+                    default:
+                        break;
+                }
+
+                if ((cntOpenBrackets - cntCloseBrackets) > maxDeepBrackets)
+                {
+                    maxDeepBrackets = cntOpenBrackets - cntCloseBrackets;
+                }
+            }
+
+            if (cntOpenBrackets == cntCloseBrackets)
+            {
+                Console.WriteLine($"\nСтрока корректная и максимум глубины равняется {maxDeepBrackets}");
+            }
+            else
+            {
+                Console.WriteLine("\nСтрока некорректная");
+            }
+        }
+    }
+}
