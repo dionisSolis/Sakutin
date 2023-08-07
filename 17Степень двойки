@@ -6,22 +6,20 @@ namespace qwerty
     {
         static void Main(string[] args)
         {
-            Random rnd = new Random();
-            int digit = rnd.Next(10000);
-            int powerOfTwo = 1;
-            int twoInPowerOfTwo = 2;
+            Random random = new Random();
+            int randomLimit = 10000;
+            int digitRandom = random.Next(randomLimit);
+            int digitStart = 2;
+            int digitToPower = 2;
+            int digitPower = 1;
 
-            for (int i = 0; i < digit; i++) 
+            while (digitRandom > digitToPower) 
             {
-                if (twoInPowerOfTwo > digit)
-                {
-                    Console.WriteLine($"Для числа {digit} будет 2 в степени {powerOfTwo}, то есть {twoInPowerOfTwo}. {digit} < {twoInPowerOfTwo}");
-                    break;
-                }
-
-                powerOfTwo++;
-                twoInPowerOfTwo *= 2;
+                digitPower++;
+                digitToPower *= digitStart;
             }
+
+            Console.WriteLine($"Для числа {digitRandom} будет {digitStart} в степени {digitPower}, то есть {digitToPower}. {digitRandom} < {digitToPower}");
         }
     }
 }
