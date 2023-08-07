@@ -7,21 +7,21 @@ namespace qwerty
         static void Main(string[] args)
         {
             Random random = new Random();
-            int randomLimit = 100;
-            int firstIntToDivision = 3;
-            int secondIntToDivision = 5;
-            int sumDigitsModDigitToDivision = 0;
+            int randomLimit = 101;
+            int firstDivider = 3;
+            int secondDivider = 5;
+            int sum = 0;
             int number = random.Next(randomLimit);
 
             for (int i = 1; i <= number; i++)
             {
-                if (i % firstIntToDivision == 0 || i % secondIntToDivision == 0)
+                if (i % firstDivider == 0 || i % secondDivider == 0)
                 {
-                    sumDigitsModDigitToDivision += i;
+                    sum += i;
                 }
             }
 
-            Console.WriteLine($"Сумма чисел, кратных или {firstIntToDivision}, или {secondIntToDivision}, до {number} равна {sumDigitsModDigitToDivision}");
+            Console.WriteLine($"Сумма чисел, кратных или {firstDivider}, или {secondDivider}, до {number} равна {sum}");
         }
     }
 }
