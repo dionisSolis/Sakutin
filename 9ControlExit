@@ -1,4 +1,3 @@
-
 using System;
 
 namespace qwerty
@@ -8,14 +7,15 @@ namespace qwerty
         static void Main(string[] args)
         {
             string userInput = " ";
+            string exit = "exit";
             bool isInputExit = false;
 
-            while (!isInputExit)
+            while (isInputExit == false)
             {
                 Console.WriteLine("Бесконечный цикл, пока не введете exit");
                 userInput = Console.ReadLine();
 
-                if (userInput == "exit")
+                if (userInput == exit)
                 {
                     isInputExit = true;
                 }
