@@ -8,31 +8,26 @@ namespace qwerty
         {
             string password = "qwerty123456";
             string userInput;
-            int attempts = 0;
+            int attempts = 3;
 
-            while (attempts != 3)
-            {
-                attempts++;
-
+            for (int i = 1; i <= attempts; i++)
+            { 
                 Console.Clear();
-                Console.Write($"Попытка {attempts}/3\nВведите пароль: ");
-                userInput = Console.ReadLine(); 
+                Console.Write($"Попытка {i}/{attempts}\nВведите пароль: ");
+                userInput = Console.ReadLine();
 
                 if (userInput == password)
                 {
                     Console.WriteLine("\nПароль введен верно! Секретное сообщение выведено");
                     break;
                 }
+                else if (i == attempts)
+                {
+                    Console.WriteLine("\nПопытки закончились, завершение программы");
+                }
                 else
                 {
-                    if (attempts == 3)
-                    {
-                        Console.WriteLine("\nПопытки закончились, завершение программы");
-                    }
-                    else
-                    {
-                        Console.WriteLine("\nПароль введен неверно, попробуйте еще раз!");
-                    }
+                    Console.WriteLine("\nПароль введен неверно, попробуйте еще раз!");
                 }
 
                 Console.WriteLine("\n\nНажмите любую кнопку для обновления...");
