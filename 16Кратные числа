@@ -6,26 +6,23 @@ namespace qwerty
     {
         static void Main(string[] args)
         {
-            Random rnd = new Random();
-            int n = rnd.Next(1, 27);
-            int cntThreeDigitNumbersModN = 0;
+            Random random = new Random();
+            int firstRandomLimit = 1;
+            int secondRandomLimit = 28;
+            int firstDigitsLimit = 100;
+            int secondDigitsLimit = 999;
+            int n = random.Next(firstRandomLimit, secondRandomLimit);
+            int cntDigitsModN = 0;
 
-            for (int i = 100; i < 1000; i++)
+            for (int i = 0; i <= secondDigitsLimit; i+=n) 
             {
-                int digit = i;
-                
-                while (digit > 0)
+                if (i >= firstDigitsLimit)
                 {
-                    digit -= n;
-                }
-
-                if (digit == 0)
-                {
-                    cntThreeDigitNumbersModN++;
+                    cntDigitsModN++;
                 }
             }
 
-            Console.WriteLine($"Кол-во 3ехзначных чисел, кратных {n} - {cntThreeDigitNumbersModN}");
+            Console.WriteLine($"Кол-во чисел в диапазоне [{firstDigitsLimit};{secondDigitsLimit}], кратных {n} - {cntDigitsModN}");
         }
     }
 }
