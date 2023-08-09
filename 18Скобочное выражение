@@ -4,9 +4,12 @@ namespace qwerty
 {
     class Program
     {
+        const char OpenBracket = '(';
+        const char CloseBracket = ')';
         static void Main(string[] args)
         {
             string userInput;
+            
             int cntOpenBrackets = 0;
             int cntCloseBrackets = 0;
             int maxDeepBrackets = 0;
@@ -14,21 +17,23 @@ namespace qwerty
             Console.Write("Введите строку из скобок: ");
             userInput = Console.ReadLine();
 
-            foreach (var symbol in userInput) 
-            { 
+            foreach (char symbol in userInput)
+            {
                 switch (symbol)
                 {
-                    case '(':
+                    case OpenBracket:
                         cntOpenBrackets++;
                         break;
-                    case ')':
+                    case CloseBracket:
                         cntCloseBrackets++;
-                        break;
-                    default:
                         break;
                 }
 
-                if ((cntOpenBrackets - cntCloseBrackets) > maxDeepBrackets)
+                if (cntCloseBrackets > cntOpenBrackets)
+                {
+                    break;
+                }
+                else if ((cntOpenBrackets - cntCloseBrackets) > maxDeepBrackets)
                 {
                     maxDeepBrackets = cntOpenBrackets - cntCloseBrackets;
                 }
