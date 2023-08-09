@@ -11,18 +11,18 @@ namespace qwerty
             int secondRandomLimit = 28;
             int firstDigitsLimit = 100;
             int secondDigitsLimit = 999;
-            int n = random.Next(firstRandomLimit, secondRandomLimit);
-            int cntDigitsModN = 0;
+            int numberN = random.Next(firstRandomLimit, secondRandomLimit);
+            int countDigits = 0;
 
-            for (int i = 0; i <= secondDigitsLimit; i+=n) 
+            for (int i = 0; i <= secondDigitsLimit; i += numberN)
             {
                 if (i >= firstDigitsLimit)
                 {
-                    cntDigitsModN++;
+                    countDigits++;
                 }
             }
 
-            Console.WriteLine($"Кол-во чисел в диапазоне [{firstDigitsLimit};{secondDigitsLimit}], кратных {n} - {cntDigitsModN}");
+            Console.WriteLine($"Кол-во чисел в диапазоне [{firstDigitsLimit};{secondDigitsLimit}], кратных {numberN} - {countDigits}");
         }
     }
 }
