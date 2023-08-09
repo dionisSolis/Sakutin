@@ -6,25 +6,30 @@ namespace qwerty
     {
         static void Main(string[] args)
         {
-            string stringToDraw;
-            string drawSymbol;
+            string name;
+            string symbol;
+            int lengthName;
 
+            Console.Write("Введите строку для отрисовки: ");
+            name = Console.ReadLine();
+            lengthName = name.Length;
             Console.Write("Введите символ для отрисовки: ");
-            drawSymbol = Console.ReadLine();
-            Console.Write("Введиет строку для отрисовки: ");
-            stringToDraw = Console.ReadLine();
+            symbol = Console.ReadLine();
+            Console.Write($"\n{symbol}");
 
-            for (int i = 0; i < stringToDraw.Length + 2; i++)
+            for (int i = 0; i < lengthName; i++)
             {
-                Console.Write(drawSymbol);
+                Console.Write(symbol);
             }
 
-            Console.WriteLine("\n" + drawSymbol + stringToDraw + drawSymbol);
+            Console.Write($"{symbol}\n{symbol}{name}{symbol}\n{symbol}");
 
-            for (int i = 0; i < stringToDraw.Length + 2; i++)
+            for (int i = 0; i < lengthName; i++)
             {
-                Console.Write(drawSymbol);
+                Console.Write(symbol);
             }
+
+            Console.WriteLine(symbol);
         }
     }
 }
