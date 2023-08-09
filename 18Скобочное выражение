@@ -9,7 +9,6 @@ namespace qwerty
         static void Main(string[] args)
         {
             string userInput;
-            
             int cntOpenBrackets = 0;
             int cntCloseBrackets = 0;
             int maxDeepBrackets = 0;
@@ -24,16 +23,16 @@ namespace qwerty
                     case OpenBracket:
                         cntOpenBrackets++;
                         break;
+
                     case CloseBracket:
                         cntCloseBrackets++;
                         break;
                 }
-
                 if (cntCloseBrackets > cntOpenBrackets)
                 {
                     break;
                 }
-                else if ((cntOpenBrackets - cntCloseBrackets) > maxDeepBrackets)
+                if ((cntOpenBrackets - cntCloseBrackets) > maxDeepBrackets)
                 {
                     maxDeepBrackets = cntOpenBrackets - cntCloseBrackets;
                 }
