@@ -20,7 +20,7 @@ namespace qwerty
             while (userInput != "exit")
             {
                 Console.WriteLine($"Личный кабинет\n\nИмя: {nickname}\nПароль: {password}\nДеньги: {money}\nУровень: {level}");
-                Console.Write("\nКоманды\n1)Изменить имя\n2)Изменить пароль\n3)Изменить кол-во денег\n4)Изменить уровень\nДля выхода введите exit\nВвод...");
+                Console.Write($"\nКоманды\n1)Изменить имя\n2)Изменить пароль\n3)Изменить кол-во денег\n4)Изменить уровень\nДля выхода введите {CommandExit}\nВвод...");
                 userInput = Console.ReadLine().ToLower();
 
                 switch (userInput)
