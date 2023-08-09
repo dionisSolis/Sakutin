@@ -8,6 +8,7 @@ namespace qwerty
         {
             string name;
             string symbol;
+            string lineSymbols = "";
             int lengthName;
 
             Console.Write("Введите строку для отрисовки: ");
@@ -15,21 +16,17 @@ namespace qwerty
             lengthName = name.Length;
             Console.Write("Введите символ для отрисовки: ");
             symbol = Console.ReadLine();
-            Console.Write($"\n{symbol}");
+            lineSymbols += symbol;
 
             for (int i = 0; i < lengthName; i++)
             {
-                Console.Write(symbol);
+                lineSymbols += symbol;
             }
 
-            Console.Write($"{symbol}\n{symbol}{name}{symbol}\n{symbol}");
-
-            for (int i = 0; i < lengthName; i++)
-            {
-                Console.Write(symbol);
-            }
-
-            Console.WriteLine(symbol);
+            lineSymbols += symbol;
+            Console.WriteLine("\n" + lineSymbols);
+            Console.WriteLine(symbol + name + symbol);
+            Console.WriteLine(lineSymbols);
         }
     }
 }
