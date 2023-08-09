@@ -4,6 +4,11 @@ namespace qwerty
 {
     class Program
     {
+        const string CommandChangeName = "1";
+        const string CommandChangePassword = "2";
+        const string CommandChangeMoney = "3";
+        const string CommandChangeLevel = "4";
+        const string CommandExit = "exit";
         static void Main(string[] args)
         {
             string userInput = "";
@@ -18,43 +23,43 @@ namespace qwerty
                 Console.Write("\nКоманды\n1)Изменить имя\n2)Изменить пароль\n3)Изменить кол-во денег\n4)Изменить уровень\nДля выхода введите exit\nВвод...");
                 userInput = Console.ReadLine().ToLower();
 
-                switch(userInput)
+                switch (userInput)
                 {
-                    case "1":
+                    case CommandChangeName:
                         Console.Clear();
                         Console.Write("Смена  имени\nТекущее имя " + nickname + "\nВведите новое имя: ");
                         nickname = Console.ReadLine();
                         Console.WriteLine("\nУспешно!");
                         break;
-                    case "2":
+                    case CommandChangePassword:
                         Console.Clear();
                         Console.Write("Смена пароля\nТекущий пароль " + password + "\nВведите новый пароль: ");
                         password = Console.ReadLine();
                         Console.WriteLine("\nУспешно!");
                         break;
-                    case "3":
+                    case CommandChangeMoney:
                         Console.Clear();
                         Console.Write("Смена  кол-ва денег\nТекущее кол-во " + money + "\nВведите новое кол-во: ");
 
-                        while (!double.TryParse(Console.ReadLine(), out money))
+                        while (double.TryParse(Console.ReadLine(), out money) == false)
                         {
                             Console.Write("\nВведите корректное значение ");
                         }
 
                         Console.WriteLine("\nУспешно!");
                         break;
-                    case "4":
+                    case CommandChangeLevel:
                         Console.Clear();
                         Console.Write("Смена  уровня\nТекущий уровень " + level + "\nВведите новый уровень >= 0: ");
 
-                        while (!int.TryParse(Console.ReadLine(), out level) || level < 0)
+                        while (int.TryParse(Console.ReadLine(), out level) == false || level < 0)
                         {
                             Console.Write("\nВведите корректное значение ");
                         }
 
                         Console.WriteLine("\nУспешно!");
                         break;
-                    case "exit":
+                    case CommandExit:
                         Console.Clear();
                         Console.WriteLine("Всего доброго!");
                         break;
