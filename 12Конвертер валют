@@ -1,0 +1,154 @@
+using System;
+namespace qwerty
+{
+    class Program
+    {
+        const string MenuExit = "exit";
+        const string MenuRublesToEuros = "1";
+        const string MenuEurosToRubles = "2";
+        const string MenuRublesToDollars = "3";
+        const string MenuDollarsToRubles = "4";
+        const string MenuDollarsToEuros = "5";
+        const string MenuEurosToDollars = "6";
+        static void Main(string[] args)
+        {
+            double rubles;
+            double euros;
+            double dollars;
+            double oneRubleToEuro = 0.0094;
+            double oneEuroToRuble = 106.34;
+            double oneEuroToDollar = 1.10;
+            double oneDollarToEuro = 0.91;
+            double oneRubleToDollar = 0.010;
+            double oneDollarToRuble = 96.88;
+            string userInput = "";
+            double sumExchange;
+
+            Console.WriteLine("Конвертер валют\n\nВведите Ваш баланс: ");
+            Console.Write("Рубли: ");
+            rubles = double.Parse(Console.ReadLine());
+            Console.Write("Евро: ");
+            euros = double.Parse(Console.ReadLine());
+            Console.Write("Доллары: ");
+            dollars = double.Parse(Console.ReadLine());
+
+            while (userInput != MenuExit)
+            {
+                Console.Clear();
+                Console.WriteLine($"Баланс\nРубли: {rubles}\nЕвро: {euros}\nДоллары: {dollars}");
+                Console.Write("\nВыберите тип операции и введите ее цифру:\n1.Рубли в евро\n2.Евро в рубли\n3.Рубли в доллары\n4.Доллары в рубли\n5.Доллары в евро\n6.Евро в доллары\nДля выхода введите exit\nВвод...");
+                userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case MenuRublesToEuros:
+                        Console.Write("\n\nВведите сумму для обмена - "); 
+                        sumExchange = double.Parse(Console.ReadLine());
+
+                        if (rubles < sumExchange || sumExchange <= 0)
+                        {
+                            Console.WriteLine("\nНедопустимая сумма, попробуйте еще раз");
+                        }
+                        else
+                        {
+                            rubles -= sumExchange;
+                            euros += sumExchange * oneRubleToEuro;
+                            Console.WriteLine("\nУспешно");
+                        }
+                        break;
+
+                    case MenuEurosToRubles:
+                        Console.Write("\n\nВведите сумму для обмена - ");
+                        sumExchange = double.Parse(Console.ReadLine());
+
+                        if (euros < sumExchange || sumExchange <= 0)
+                        {
+                            Console.WriteLine("Недопустимая сумма, попробуйте еще раз");
+                        }
+                        else
+                        {
+                            euros -= sumExchange;
+                            rubles += sumExchange * oneEuroToRuble;
+                            Console.WriteLine("\nУспешно");
+                        }
+                        break;
+
+                    case MenuRublesToDollars:
+                        Console.Write("\n\nВведите сумму для обмена - ");
+                        sumExchange = double.Parse(Console.ReadLine());
+
+                        if (rubles < sumExchange || sumExchange <= 0)
+                        {
+                            Console.Write("Недопустимая сумма, попробуйте еще раз");
+                        }
+                        else
+                        {
+                            rubles -= sumExchange;
+                            dollars += sumExchange * oneRubleToDollar;
+                            Console.WriteLine("\nУспешно");
+                        }
+                        break;
+
+                    case MenuDollarsToRubles:
+                        Console.Write("\n\nВведите сумму для обмена - ");
+                        sumExchange = double.Parse(Console.ReadLine());
+
+                        if (dollars < sumExchange || sumExchange <= 0)
+                        {
+                            Console.WriteLine("Недопустимая сумма, попробуйте еще раз");
+                        }
+                        else
+                        {
+                            dollars -= sumExchange;
+                            rubles += sumExchange * oneDollarToRuble;
+                            Console.WriteLine("\nУспешно");
+                        }
+                        break;
+
+                    case MenuDollarsToEuros:
+                        Console.Write("\n\nВведите сумму для обмена - ");
+                        sumExchange = double.Parse(Console.ReadLine());
+
+                        if (dollars < sumExchange || sumExchange <= 0)
+                        {
+                            Console.WriteLine("Недопустимая сумма, попробуйте еще раз");
+                        }
+                        else
+                        {
+                            dollars -= sumExchange;
+                            euros += sumExchange * oneDollarToEuro;
+                            Console.WriteLine("\nУспешно");
+                        }
+                        break;
+
+                    case MenuEurosToDollars:
+                        Console.Write("\n\nВведите сумму для обмена - ");
+                        sumExchange = double.Parse(Console.ReadLine());
+
+                        if (euros < sumExchange || sumExchange <= 0)
+                        {
+                            Console.WriteLine("Недопустимая сумма, попробуйте еще раз");
+                        }
+                        else
+                        {
+                            euros -= sumExchange;
+                            dollars += sumExchange * oneEuroToDollar;
+                            Console.WriteLine("\nУспешно");
+                        }
+                        break;
+
+                    case MenuExit:
+                        Console.WriteLine("\n\nВсего хорошего!");
+                        break;
+
+                    default:
+                        Console.WriteLine("\n\nДанной операции нет");
+                        break;
+                }
+
+                Console.WriteLine("\nНажмите любую клавишу для обновления");
+                Console.ReadKey();
+            }
+        }
+    }
+}
