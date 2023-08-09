@@ -1,0 +1,90 @@
+using System;
+namespace qwerty
+{
+    class Program
+    {
+        const string MenuBasedAttack = "1";
+        const string MenuPrayHeal = "2";
+        const string MenuRageAttack= "3";
+        static void Main(string[] args)
+        {
+            int healthPointsUser = 100;
+            int damageUser = 10;
+            int rageUser = 15;
+            int healUser = 20;
+            int healthPointsBoss = 100;
+            int damageBoss = 15;
+            string userInput;
+            string lastUserCommand = "0";
+
+            Console.WriteLine("Вы - воин древних руссов.\n\nКак-то раз Вы отбились от своей дружины из-за странного свечения внутри леса...\nПодойдя ближе, Вы наткнулись на большого ящера! \nДа поможет Вам Перун, к oружию!!!\n\n");
+            Console.ReadKey();
+
+            while (healthPointsUser > 0 && healthPointsBoss > 0)
+            {
+                Console.Clear();
+                Console.WriteLine($"Вашe здоровье: {healthPointsUser}\n");
+                Console.WriteLine($"Здоровье ящера: {healthPointsBoss}\n");
+                Console.Write($"Ваши способности\n1)Рубящий удар мечом (-{damageUser}хп)\n2)Молитва Перуну (+{healUser}хп)\n3)Яростный рывок (После Молитвы, -{rageUser}хп)\nВвод...");
+                userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case MenuBasedAttack:
+                        Console.WriteLine("\nПолучай, ирод!");
+                        healthPointsBoss -= damageUser;
+                        break;
+
+                    case MenuPrayHeal:
+                        Console.WriteLine("\nПеруне, Отче наш!\nГремят во Сварге Синей твой Меч и Щит." +
+                            "\nМы, верные дети Твои, слышим Силу Твою несказанную, Силу Праведную, Родом данную!" +
+                            "\nТы лад оберегаешь, род Русский и нас всегда защищаешь." +
+                            "\nЗащити души наши Святыми Перуницами, а тела наши – Огненными Громницами," +
+                            "\nПусть они нас не трогают, а врагов отгоняют." +
+                            "\nГорит в душах наших Огонь Сварожий, Огонь Веры Праведной, Святой Божий." +
+                            "\nПосему с Тобой мы всегда едины, в Триглаве Великом объединены, прибудь к нам на призыв наш!" +
+                            "\nСлава Перуну!");
+                        healthPointsUser += healUser;
+                        break;
+
+                    case MenuRageAttack:
+                        if (lastUserCommand == "2")
+                        {
+                            Console.WriteLine("\nВы чувствуете силу самого Перуна в своих руках...");
+                            healthPointsBoss -= rageUser;
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nВы пытались ускорить свои атаки, но вместо этого только устали..."); 
+                        }
+                        break;
+
+                    default:
+                        Console.WriteLine("Ящер: В чем проблема, рус? Разучился драться? >:) (такой команды нет)");
+                        break;
+                }
+
+                lastUserCommand = userInput;
+                healthPointsUser -= damageBoss;
+                Console.WriteLine("\nНажмите любую кнопку для обновления");
+                Console.ReadKey();
+            }
+
+            Console.Clear();
+            Console.WriteLine("Исход битвы");
+
+            if (healthPointsUser <= 0 && healthPointsBoss <= 0) 
+            {
+                Console.WriteLine("\nВы выиграли эту битву, но истекли кровью...Когда Вас первым нашел торговый караван, кто-то в толпе сказал: 'И мiр покинул, и не стал монахом...'");
+            }
+            else if (healthPointsBoss <= 0)
+            {
+                Console.WriteLine("\nЭто была хорошая битва, из который Вы вышли победителем! Еще долго гремела слава о Вашем подвиге!");
+            }
+            else
+            {
+                Console.WriteLine("\nВы побеждены ящером...Долго и горько плакала Ваша мать над бездыханным телом.");
+            }
+        }
+    }
+}
