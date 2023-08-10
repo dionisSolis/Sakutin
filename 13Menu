@@ -17,10 +17,16 @@ namespace qwerty
             double money = 0;
             int level = 0;
 
-            while (userInput != "exit")
+            while (userInput != CommandExit)
             {
                 Console.WriteLine($"Личный кабинет\n\nИмя: {nickname}\nПароль: {password}\nДеньги: {money}\nУровень: {level}");
-                Console.Write($"\nКоманды\n1)Изменить имя\n2)Изменить пароль\n3)Изменить кол-во денег\n4)Изменить уровень\nДля выхода введите {CommandExit}\nВвод...");
+                Console.Write($"\nКоманды" +
+                    $"\n{CommandChangeName})Изменить имя" +
+                    $"\n{CommandChangePassword})Изменить пароль" +
+                    $"\n{CommandChangeMoney})Изменить кол-во денег" +
+                    $"\n{CommandChangeLevel})Изменить уровень" +
+                    $"\nДля выхода введите {CommandExit}" +
+                    $"\nВвод...");
                 userInput = Console.ReadLine().ToLower();
 
                 switch (userInput)
@@ -31,12 +37,14 @@ namespace qwerty
                         nickname = Console.ReadLine();
                         Console.WriteLine("\nУспешно!");
                         break;
+
                     case CommandChangePassword:
                         Console.Clear();
                         Console.Write("Смена пароля\nТекущий пароль " + password + "\nВведите новый пароль: ");
                         password = Console.ReadLine();
                         Console.WriteLine("\nУспешно!");
                         break;
+
                     case CommandChangeMoney:
                         Console.Clear();
                         Console.Write("Смена  кол-ва денег\nТекущее кол-во " + money + "\nВведите новое кол-во: ");
@@ -48,6 +56,7 @@ namespace qwerty
 
                         Console.WriteLine("\nУспешно!");
                         break;
+
                     case CommandChangeLevel:
                         Console.Clear();
                         Console.Write("Смена  уровня\nТекущий уровень " + level + "\nВведите новый уровень >= 0: ");
@@ -59,10 +68,12 @@ namespace qwerty
 
                         Console.WriteLine("\nУспешно!");
                         break;
+
                     case CommandExit:
                         Console.Clear();
                         Console.WriteLine("Всего доброго!");
                         break;
+                        
                     default:
                         Console.WriteLine("\nТакой команды не существует!");
                         break;
