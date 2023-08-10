@@ -4,13 +4,14 @@ namespace qwerty
 {
     class Program
     {
-        const string CommandChangeName = "1";
-        const string CommandChangePassword = "2";
-        const string CommandChangeMoney = "3";
-        const string CommandChangeLevel = "4";
-        const string CommandExit = "exit";
         static void Main(string[] args)
         {
+            const string CommandChangeName = "1";
+            const string CommandChangePassword = "2";
+            const string CommandChangeMoney = "3";
+            const string CommandChangeLevel = "4";
+            const string CommandExit = "exit";
+
             string userInput = "";
             string password = "";
             string nickname = "";
@@ -73,7 +74,7 @@ namespace qwerty
                         Console.Clear();
                         Console.WriteLine("Всего доброго!");
                         break;
-                        
+
                     default:
                         Console.WriteLine("\nТакой команды не существует!");
                         break;
