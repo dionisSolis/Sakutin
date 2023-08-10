@@ -3,14 +3,14 @@ using System;
 namespace qwerty
 {
     class Program
-    {
-        const char OpenBracket = '(';
-        const char CloseBracket = ')';
+    {    
         static void Main(string[] args)
         {
+            const char OpenBracket = '(';
+            const char CloseBracket = ')';
+
             string userInput;
-            int countOpenBrackets = 0;
-            int countCloseBrackets = 0;
+            int countBrackets = 0;
             int maxDeepBrackets = 0;
 
             Console.Write("Введите строку из скобок: ");
@@ -21,23 +21,25 @@ namespace qwerty
                 switch (symbol)
                 {
                     case OpenBracket:
-                        countOpenBrackets++;
+                        countBrackets++;
                         break;
 
                     case CloseBracket:
-                        countCloseBrackets++;
+                        countBrackets--;
                         break;
                 }
-                if (countCloseBrackets > countOpenBrackets)
+
+                if (countBrackets < 0)
                 {
                     break;
                 }
-                if ((countOpenBrackets - countCloseBrackets) > maxDeepBrackets)
+                if (countBrackets > maxDeepBrackets)
                 {
-                    maxDeepBrackets = countOpenBrackets - countCloseBrackets;
+                    maxDeepBrackets = countBrackets;
                 }
             }
-            if (countOpenBrackets == countCloseBrackets)
+
+            if (countBrackets == 0)
             {
                 Console.WriteLine($"\nСтрока корректная и максимум глубины равняется {maxDeepBrackets}");
             }
