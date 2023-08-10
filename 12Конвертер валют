@@ -15,12 +15,14 @@ namespace qwerty
             double rubles;
             double euros;
             double dollars;
+
             double oneRubleToEuro = 0.0094;
             double oneEuroToRuble = 106.34;
             double oneEuroToDollar = 1.10;
             double oneDollarToEuro = 0.91;
             double oneRubleToDollar = 0.010;
             double oneDollarToRuble = 96.88;
+
             string userInput = "";
             double sumExchange;
 
@@ -36,13 +38,18 @@ namespace qwerty
             {
                 Console.Clear();
                 Console.WriteLine($"Баланс\nРубли: {rubles}\nЕвро: {euros}\nДоллары: {dollars}");
-                Console.Write("\nВыберите тип операции и введите ее цифру:\n1.Рубли в евро\n2.Евро в рубли\n3.Рубли в доллары\n4.Доллары в рубли\n5.Доллары в евро\n6.Евро в доллары\nДля выхода введите exit\nВвод...");
+                Console.Write($"\nВыберите тип операции и введите ее цифру:" +
+                    $"\n{MenuRublesToEuros}.Рубли в евро\n{MenuEurosToRubles}.Евро в рубли" +
+                    $"\n{MenuRublesToDollars}.Рубли в доллары\n{MenuDollarsToRubles}.Доллары в рубли" +
+                    $"\n{MenuDollarsToEuros}.Доллары в евро\n{MenuEurosToDollars}.Евро в доллары" +
+                    $"\nДля выхода введите {MenuExit}" +
+                    $"\nВвод...");
                 userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
                     case MenuRublesToEuros:
-                        Console.Write("\n\nВведите сумму для обмена - "); 
+                        Console.Write("\n\nВведите сумму для обмена - ");
                         sumExchange = double.Parse(Console.ReadLine());
 
                         if (rubles < sumExchange || sumExchange <= 0)
@@ -145,7 +152,6 @@ namespace qwerty
                         Console.WriteLine("\n\nДанной операции нет");
                         break;
                 }
-
                 Console.WriteLine("\nНажмите любую клавишу для обновления");
                 Console.ReadKey();
             }
