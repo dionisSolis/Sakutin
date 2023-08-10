@@ -3,11 +3,12 @@ namespace qwerty
 {
     class Program
     {
-        const string MenuBasedAttack = "1";
-        const string MenuPrayHeal = "2";
-        const string MenuRageAttack = "3";
         static void Main(string[] args)
         {
+            const string MenuBasedAttack = "1";
+            const string MenuPrayHeal = "2";
+            const string MenuRageAttack = "3";
+
             int healthPointsUser = 100;
             int damageUser = 10;
             int rageUser = 15;
@@ -33,7 +34,7 @@ namespace qwerty
                 Console.Write($"Ваши способности" +
                     $"\n{MenuBasedAttack})Рубящий удар мечом (-{damageUser}хп)" +
                     $"\n{MenuPrayHeal})Молитва Перуну (+{healUser}хп)" +
-                    $"\n{MenuRageAttack})Яростный рывок (После Молитвы, -{rageUser}хп)" +
+                    $"\n{MenuRageAttack})Яростный рывок (После способности №{MenuPrayHeal}, -{rageUser}хп)" +
                     $"\nВвод...");
                 userInput = Console.ReadLine();
 
@@ -78,6 +79,7 @@ namespace qwerty
                 Console.WriteLine("\nНажмите любую кнопку для обновления");
                 Console.ReadKey();
             }
+
             Console.Clear();
             Console.WriteLine("Исход битвы");
 
