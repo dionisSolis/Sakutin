@@ -9,8 +9,8 @@ namespace qwerty
         static void Main(string[] args)
         {
             string userInput;
-            int cntOpenBrackets = 0;
-            int cntCloseBrackets = 0;
+            int countOpenBrackets = 0;
+            int countCloseBrackets = 0;
             int maxDeepBrackets = 0;
 
             Console.Write("Введите строку из скобок: ");
@@ -21,24 +21,23 @@ namespace qwerty
                 switch (symbol)
                 {
                     case OpenBracket:
-                        cntOpenBrackets++;
+                        countOpenBrackets++;
                         break;
 
                     case CloseBracket:
-                        cntCloseBrackets++;
+                        countCloseBrackets++;
                         break;
                 }
-                if (cntCloseBrackets > cntOpenBrackets)
+                if (countCloseBrackets > countOpenBrackets)
                 {
                     break;
                 }
-                if ((cntOpenBrackets - cntCloseBrackets) > maxDeepBrackets)
+                if ((countOpenBrackets - countCloseBrackets) > maxDeepBrackets)
                 {
-                    maxDeepBrackets = cntOpenBrackets - cntCloseBrackets;
+                    maxDeepBrackets = countOpenBrackets - countCloseBrackets;
                 }
             }
-
-            if (cntOpenBrackets == cntCloseBrackets)
+            if (countOpenBrackets == countCloseBrackets)
             {
                 Console.WriteLine($"\nСтрока корректная и максимум глубины равняется {maxDeepBrackets}");
             }
