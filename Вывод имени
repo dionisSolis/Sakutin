@@ -21,7 +21,6 @@ namespace qwerty
             {
                 lineSymbols += symbol;
             }
-
             Console.WriteLine("\n" + lineSymbols);
             Console.WriteLine(lineName);
             Console.WriteLine(lineSymbols);
