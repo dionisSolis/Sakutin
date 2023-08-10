@@ -17,10 +17,11 @@ namespace qwerty
             symbol = char.Parse(Console.ReadLine());
             lineName = symbol + name + symbol;
 
-            while (lineName.Length != lineSymbols.Length)
+            for (int i = 0; i < lineName.Length; i++)
             {
                 lineSymbols += symbol;
             }
+
             Console.WriteLine("\n" + lineSymbols);
             Console.WriteLine(lineName);
             Console.WriteLine(lineSymbols);
