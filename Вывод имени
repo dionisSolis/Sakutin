@@ -6,8 +6,8 @@ namespace qwerty
     {
         static void Main(string[] args)
         {
-            string name;
             char symbol;
+            string name;
             string lineName = "";
             string lineSymbols = "";
 
