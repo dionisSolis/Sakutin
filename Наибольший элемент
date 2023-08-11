@@ -1,0 +1,56 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            int randomLimit = 10;
+
+            int lines = 10;
+            int coloumns = 10;
+            int[,] matrix = new int[lines, coloumns];
+
+            int maxMatrix = int.MinValue;
+
+            Console.WriteLine("Исходная матрица");
+
+            for (int i = 0; i < lines; i++)
+            {
+                for (int j = 0; j < coloumns; j++) 
+                {
+                    matrix[i, j] = random.Next(randomLimit);
+
+                    if (matrix[i, j] > maxMatrix)
+                    {
+                        maxMatrix = matrix[i, j];
+                    }
+
+                    Console.Write($"{matrix[i, j]}\t");
+                }
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine($"\nМаксимальный элемент матрицы: {maxMatrix}\n");
+            Console.WriteLine("Полученная матрица");
+
+            for (int i = 0; i < lines; i++)
+            {
+                for (int j = 0; j < coloumns; j++)
+                {
+                    if (matrix[i, j] == maxMatrix)
+                    {
+                        matrix[i, j] = 0;
+                    }
+
+                    Console.Write($"{matrix[i, j]}\t");
+                }
+
+                Console.WriteLine();
+            }
+        }
+    }
+}
