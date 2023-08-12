@@ -1,0 +1,23 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userInput;
+
+            Console.Write("Введите строку: ");
+            userInput = Console.ReadLine();
+
+            string[] words = userInput.Split(' ');
+            Console.WriteLine();
+
+            foreach (string word in words)
+            {
+                Console.WriteLine(word);
+            }
+        }
+    }
+}
