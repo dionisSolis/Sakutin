@@ -1,0 +1,46 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const string CommandExit = "exit";
+            const string CommandSum = "sum";
+
+            int[] array = new int[0];
+
+            int sum = 0;
+
+            string userInput = "";
+
+            Console.WriteLine("Пользователь вводит числа, и программа их запоминает." +
+                $"\n\nКак только пользователь введёт команду {CommandSum}, программа выведет сумму всех веденных чисел. " +
+                $"\n\nВыход из программы должен происходить только в том случае, если пользователь введет команду {CommandExit}.\n\n");
+
+            while (userInput != CommandExit)
+            {
+                userInput = Console.ReadLine();
+
+                if (userInput != CommandExit && userInput != CommandSum)
+                {
+                    int[] arrayBigger = new int[array.Length + 1];
+
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        arrayBigger[i] = array[i];
+                    }
+
+                    arrayBigger[arrayBigger.Length - 1] = Convert.ToInt32(userInput);
+                    array = arrayBigger;
+                    sum += array[array.Length - 1];
+                }
+                if (userInput == CommandSum)
+                {
+                    Console.WriteLine($"\nСумма введенных чисел: {sum}\n");
+                }
+            }
+        }
+    }
+}
