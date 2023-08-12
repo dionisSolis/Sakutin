@@ -13,36 +13,49 @@ namespace qwerty
             int coloumns = 3;
             int[,] matrix = new int[lines, coloumns];
 
-            int lineForSum = 2;
+            int lineNumber = 2;
             int sum = 0;
-            int coloumnForMultiply = 1;
+            int coloumnNumber = 1;
             int multiply = 1;
 
             Console.WriteLine("Матрица");
 
             for (int i = 0; i < lines; i++)
             {
-                for (int j = 0; j < coloumns; j++) 
+                for (int j = 0; j < coloumns; j++)
                 {
                     matrix[i, j] = random.Next(randomLimit);
-
-                    if (i == lineForSum - 1)
-                    {
-                        sum += matrix[i, j];
-                    }
-                    if (j == coloumnForMultiply - 1)
-                    {
-                        multiply *= matrix[i, j];
-                    }
-
                     Console.Write($"{matrix[i, j]}\t");
                 }
 
                 Console.WriteLine();
             }
 
-            Console.WriteLine($"\nСумма строки №{lineForSum}: {sum}");
-            Console.WriteLine($"Произведение столбца №{coloumnForMultiply}: {multiply}");
+            for (int i = 0; i < lines; i++)
+            {
+                for (int j = 0; j < coloumns; j++)
+                {
+                    if (i == lineNumber - 1)
+                    {
+                        sum += matrix[i, j];
+                    }
+                }
+            }
+
+            Console.WriteLine($"\nСумма строки №{lineNumber}: {sum}");
+
+            for (int i = 0; i < lines; i++)
+            {
+                for (int j = 0; j < coloumns; j++)
+                {
+                    if (j == coloumnNumber - 1)
+                    {
+                        multiply *= matrix[i, j];
+                    }
+                }
+            }
+
+            Console.WriteLine($"Произведение столбца №{coloumnNumber}: {multiply}");
         }
     }
 }
