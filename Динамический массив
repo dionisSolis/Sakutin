@@ -36,6 +36,7 @@ namespace qwerty
                     array = arrayBigger;
                     sum += array[array.Length - 1];
                 }
+
                 if (userInput == CommandSum)
                 {
                     Console.WriteLine($"\nСумма введенных чисел: {sum}\n");
