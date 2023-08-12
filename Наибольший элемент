@@ -14,12 +14,13 @@ namespace qwerty
             int[,] matrix = new int[lines, coloumns];
 
             int maxMatrix = int.MinValue;
+            int digitReplace = 0;
 
             Console.WriteLine("Исходная матрица");
 
             for (int i = 0; i < lines; i++)
             {
-                for (int j = 0; j < coloumns; j++) 
+                for (int j = 0; j < coloumns; j++)
                 {
                     matrix[i, j] = random.Next(randomLimit);
 
@@ -43,7 +44,7 @@ namespace qwerty
                 {
                     if (matrix[i, j] == maxMatrix)
                     {
-                        matrix[i, j] = 0;
+                        matrix[i, j] = digitReplace;
                     }
 
                     Console.Write($"{matrix[i, j]}\t");
