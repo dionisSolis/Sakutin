@@ -11,8 +11,6 @@ namespace qwerty
 
             int[] array = new int[0];
 
-            int sum = 0;
-
             string userInput = "";
 
             Console.WriteLine("Пользователь вводит числа, и программа их запоминает." +
@@ -34,11 +32,16 @@ namespace qwerty
 
                     arrayBigger[arrayBigger.Length - 1] = Convert.ToInt32(userInput);
                     array = arrayBigger;
-                    sum += array[array.Length - 1];
                 }
-
-                if (userInput == CommandSum)
+                else if (userInput == CommandSum)
                 {
+                    int sum = 0;
+
+                    for (int i = 0; i < array.Length; i++)
+                    {
+                        sum += array[i];
+                    }
+
                     Console.WriteLine($"\nСумма введенных чисел: {sum}\n");
                 }
             }
