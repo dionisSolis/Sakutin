@@ -31,28 +31,16 @@ namespace qwerty
                 Console.WriteLine();
             }
 
-            for (int i = 0; i < lines; i++)
+            for (int i = 0; i < coloumns; i++)
             {
-                for (int j = 0; j < coloumns; j++)
-                {
-                    if (i == lineNumber - 1)
-                    {
-                        sum += matrix[i, j];
-                    }
-                }
+                sum += matrix[lineNumber - 1, i];
             }
 
             Console.WriteLine($"\nСумма строки №{lineNumber}: {sum}");
 
             for (int i = 0; i < lines; i++)
             {
-                for (int j = 0; j < coloumns; j++)
-                {
-                    if (j == coloumnNumber - 1)
-                    {
-                        multiply *= matrix[i, j];
-                    }
-                }
+                multiply *= matrix[i, coloumnNumber - 1];
             }
 
             Console.WriteLine($"Произведение столбца №{coloumnNumber}: {multiply}");
