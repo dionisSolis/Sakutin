@@ -23,15 +23,15 @@ namespace qwerty
 
                 if (userInput != CommandExit && userInput != CommandSum)
                 {
-                    int[] arrayBigger = new int[array.Length + 1];
+                    int[] tempArray = new int[array.Length + 1];
 
                     for (int i = 0; i < array.Length; i++)
                     {
-                        arrayBigger[i] = array[i];
+                        tempArray[i] = array[i];
                     }
 
-                    arrayBigger[arrayBigger.Length - 1] = Convert.ToInt32(userInput);
-                    array = arrayBigger;
+                    tempArray[tempArray.Length - 1] = Convert.ToInt32(userInput);
+                    array = tempArray;
                 }
                 else if (userInput == CommandSum)
                 {
