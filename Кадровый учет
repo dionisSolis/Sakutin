@@ -1,0 +1,175 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const string MenuAddDossier = "1";
+            const string MenuShowInfo = "2";
+            const string MenuRemoveDossier = "3";
+            const string MenuSearchSurname = "4";
+            const string MenuExit = "5";
+
+            string[] names = new string[0];
+            string[] posts = new string[0];
+
+            string userInput = "";
+
+            while (userInput != MenuExit)
+            {
+                Console.Clear();
+                Console.Write("Кадровый учет\n\n" +
+                    $"{MenuAddDossier}) добавить досье\n" +
+                    $"{MenuShowInfo}) вывести все досье\n" +
+                    $"{MenuRemoveDossier}) удалить досье\n" +
+                    $"{MenuSearchSurname}) поиск по фамилии\n" +
+                    $"{MenuExit}) выход\n" +
+                    "\nВвод...");
+                userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case MenuAddDossier:
+                        AddDossier(ref names, ref posts);
+                        break;
+                    case MenuShowInfo:
+                        ShowInfo(names, posts);
+                        break;
+                    case MenuRemoveDossier:
+                        RemoveDossier(ref names, ref posts);
+                        break;
+                    case MenuSearchSurname:
+                        SearchSurname(names, posts);
+                        break;
+                    case MenuExit:
+                        Console.Write("\n\nПока!");
+                        break;
+                    default:
+                        Console.WriteLine("\n\nТакой команды не существует");
+                        break;
+                }
+
+                Console.Write("\n\nДля продолжения нажмите любую клавишу...");
+                Console.ReadKey();
+            }
+        }
+
+        static void AddDossier(ref string[] names, ref string[] posts)
+        {
+            Console.Write("\n\nВведите фио работника: ");
+            AddArray(ref names, Console.ReadLine());
+            Console.Write("\n\nВведите должность работника: ");
+            AddArray(ref posts, Console.ReadLine());
+        }
+
+        static void AddArray(ref string[] array, string userInput)
+        {
+            string[] tempArray = new string[array.Length + 1];
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                tempArray[i] = array[i];
+            }
+
+            tempArray[array.Length] = userInput;
+            array = tempArray;
+        }
+
+        static void ShowInfo(string[] names, string[] posts)
+        {
+            Console.WriteLine("\n\nДосье");
+
+            for (int i = 0; i < names.Length;i++) 
+            {
+                Console.WriteLine($"{i + 1}){names[i]} - {posts[i]}");
+            }
+        }
+
+        static void RemoveDossier(ref string[] names, ref string[] posts)
+        {
+            int number;
+
+            Console.Write("\n\nВведите порядковый номер досье: ");
+            number = int.Parse(Console.ReadLine());
+
+            if (number < 1 || number >= names.Length)
+            {
+                Console.WriteLine("\nТакого номера нет");
+            }
+            else
+            {
+                RemoveArray(ref names, number);
+                RemoveArray(ref posts, number);
+            }
+        }
+
+        static void RemoveArray(ref string[] array, int number)
+        {
+            string[] tempArray = new string[array.Length - 1];
+            bool isFind = false;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (i == number - 1)
+                {
+                    isFind = true;
+                    continue;
+                }
+
+                if (isFind == true)
+                {
+                    tempArray[i - 1] = array[i];
+                }
+                else
+                {
+                    tempArray[i] = array[i];
+                }
+            }
+
+            array = tempArray;
+        }
+
+        static void SearchSurname(string[] names, string[] posts)
+        {
+            string surname;
+            bool isFind = false;
+
+            Console.Write("\n\nВведите фамилию: ");
+            surname = Console.ReadLine();
+
+            for (int i = 0; i < names.Length;i++)
+            {
+                if (surname == GetSurname(names[i]))
+                {
+                    Console.WriteLine($"\n\n{i + 1}){names[i]} - {posts[i]}");
+                    isFind = true;
+                    break;
+                }
+            }
+
+            if (isFind == false)
+            {
+                Console.WriteLine("\n\nРаботник не найден");
+            }
+        }
+
+        static string GetSurname(string name)
+        {
+            string surname = "";
+
+            foreach (char word in name)
+            {
+                if (char.IsLetter(word) == false)
+                {
+                    break;
+                }
+
+                surname += word;
+            }
+
+            return surname;
+        }
+    }
+}
