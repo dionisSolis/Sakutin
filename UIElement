@@ -1,0 +1,39 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            DrawBar(40, 0, 0);
+        }
+
+        static void DrawBar(int value, int x, int y)
+        {
+            int maxValue = 100;
+            int step = 10;
+
+            string bar = "[";
+
+            for (int i = 0; i < RoundInt(value); i+=step) 
+            {
+                bar += "#";
+            }
+
+            for (int i = value; i < maxValue; i+=step)
+            {
+                bar += "_";
+            }
+
+            bar += "]";
+            Console.SetCursorPosition(x, y);
+            Console.WriteLine(bar);
+        }
+
+        static int RoundInt(int value)
+        {
+            return (value / 10 * 10);
+        }
+    }
+}
