@@ -1,0 +1,33 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int digit;
+
+            digit = ReadInt();
+            Console.Clear();
+            Console.WriteLine($"Ваше число - {digit}");
+        }
+
+        static int ReadInt()
+        {
+            string userInput;
+            int digit;
+
+            Console.Write("Введите целое число: ");
+            userInput = Console.ReadLine();
+
+            while (int.TryParse(userInput, out digit) == false)
+            {
+                Console.Write("\n\nНеверный ввод, попробуйте еще раз: ");
+                userInput = Console.ReadLine();
+            }
+
+            return digit;
+        }
+    }
+}
