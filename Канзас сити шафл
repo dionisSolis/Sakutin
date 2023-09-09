@@ -1,0 +1,83 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] array = CreateArray();
+
+            Console.WriteLine("До перестановки: ");
+            ShowArray(array);
+            array = ShuffleArray(array);
+            Console.WriteLine("После перестановки: ");
+            ShowArray(array);
+        }
+
+        static int[] CreateArray()
+        {
+            Random random = new Random();
+
+            int[] array = new int[5];
+            
+            for(int i = 0; i < array.Length; i++)
+            {
+                array[i] = random.Next(50);
+            }
+
+            return array;
+        }
+
+        static void ShowArray(int[] array)
+        {
+            for (int i = 0; i < array.Length;i++) 
+            {
+                Console.Write(array[i] + " ");
+            }
+
+            Console.Write("\n\n");
+        }
+
+        static int[] ShuffleArray(int[] array) 
+        {
+            Random random = new Random();
+
+            int[] newArray = new int[array.Length];
+            int[] indexArray = new int[array.Length];
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                int index = random.Next(array.Length);
+
+                while (CountDigitArray(indexArray, index) != 1)
+                {
+                    indexArray[i] = index;
+                    index = random.Next(array.Length);
+                }
+            }
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                newArray[i] = array[indexArray[i]];
+            }
+
+            return newArray;    
+        }
+
+        static int CountDigitArray(int[] array, int digit)
+        {
+            int count = 0;
+
+            for (int i = 0; i < array.Length; i++) 
+            {
+                if (array[i] == digit)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+    }
+}
