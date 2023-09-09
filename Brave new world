@@ -1,0 +1,97 @@
+using System;
+using System.IO;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ConsoleKeyInfo exitKey = new ConsoleKeyInfo('q', ConsoleKey.Q, false, false, false);
+            ConsoleKeyInfo inputKey = new ConsoleKeyInfo('w', ConsoleKey.W, false, false, false);
+
+            int coordinateX = 1; 
+            int coordinateY = 1;
+
+            char wall = '#';
+            char player = '@';
+
+            char[,] map = { {'#', '#', '#', '#', '#', '#', '#', '#' },
+                            {'#', '_', '_', '_', '_', '_', '_', '#' },
+                            {'#', '_', '#', '#', '#', '_', '#', '#' },
+                            {'#', '_', '_', '_', '#', '_', '_', '#' },
+                            {'#', '_', '#', '#', '#', '#', '_', '#' },
+                            {'#', '_', '#', '_', '_', '#', '_', '#' },
+                            {'#', '_', '#', '_', '_', '#', '#', '#' },
+                            {'#', '_', '_', '_', '_', '_', '_', '#' },
+                            {'#', '#', '#', '#', '#', '#', '#', '#' },
+                          };
+
+            Console.CursorVisible = false;
+
+            while (inputKey != exitKey)
+            {
+                DrawMap(map);
+                Console.SetCursorPosition(coordinateX, coordinateY);
+                Console.Write(player);
+                inputKey = Console.ReadKey();
+                DrawMovement(inputKey, ref coordinateX, ref coordinateY, map, wall);
+                Console.Clear();
+            }
+
+        }
+        
+        static void DrawMap(char[,] map)
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
+            {
+                for (int i = 0; i < map.GetLength(0); i++)
+                {
+                    Console.Write(map[i, j]);
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        static void DrawMovement(ConsoleKeyInfo inputKey, ref int coordinateX, ref int coordinateY, char[,] map, char wall)
+        {
+            int[] direction = GetDirection(inputKey);
+
+            int newCoordinateX = coordinateX + direction[0];
+            int newCoordinateY = coordinateY + direction[1];
+
+            if (map[newCoordinateX, newCoordinateY] != wall)
+            {
+                coordinateX = newCoordinateX;
+                coordinateY = newCoordinateY;
+            }
+        }
+
+        static int[] GetDirection(ConsoleKeyInfo inputKey)
+        {
+            int[] direction = {0, 0};
+
+            switch (inputKey.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    direction[1] = -1;
+                    break;
+
+                case ConsoleKey.DownArrow:
+                    direction[1] = 1;
+                    break;
+
+                case ConsoleKey.LeftArrow:
+                    direction[0] -= 1;
+                    break;
+
+                case ConsoleKey.RightArrow:
+                    direction[0] = 1;
+                    break;
+            }
+
+            return direction;
+        }
+    }
+}
