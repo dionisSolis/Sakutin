@@ -34,18 +34,23 @@ namespace qwerty
                     case MenuAddDossier:
                         AddDossier(ref names, ref posts);
                         break;
+
                     case MenuShowInfo:
                         ShowInfo(names, posts);
                         break;
+
                     case MenuRemoveDossier:
                         RemoveDossier(ref names, ref posts);
                         break;
+
                     case MenuSearchSurname:
                         SearchSurname(names, posts);
                         break;
+
                     case MenuExit:
                         Console.Write("\n\nПока!");
                         break;
+
                     default:
                         Console.WriteLine("\n\nТакой команды не существует");
                         break;
@@ -59,12 +64,12 @@ namespace qwerty
         static void AddDossier(ref string[] names, ref string[] posts)
         {
             Console.Write("\n\nВведите фио работника: ");
-            AddArray(ref names, Console.ReadLine());
+            names = AddArray(names, Console.ReadLine());
             Console.Write("\n\nВведите должность работника: ");
-            AddArray(ref posts, Console.ReadLine());
+            posts = AddArray(posts, Console.ReadLine());
         }
 
-        static void AddArray(ref string[] array, string userInput)
+        static string[] AddArray(string[] array, string userInput)
         {
             string[] tempArray = new string[array.Length + 1];
 
@@ -75,13 +80,14 @@ namespace qwerty
 
             tempArray[array.Length] = userInput;
             array = tempArray;
+            return array;
         }
 
         static void ShowInfo(string[] names, string[] posts)
         {
             Console.WriteLine("\n\nДосье");
 
-            for (int i = 0; i < names.Length;i++) 
+            for (int i = 0; i < names.Length; i++)
             {
                 Console.WriteLine($"{i + 1}){names[i]} - {posts[i]}");
             }
@@ -100,35 +106,27 @@ namespace qwerty
             }
             else
             {
-                RemoveArray(ref names, number);
-                RemoveArray(ref posts, number);
+                names = RemoveArray(names, number);
+                posts = RemoveArray(posts, number);
             }
         }
 
-        static void RemoveArray(ref string[] array, int number)
+        static string[] RemoveArray(string[] array, int number)
         {
             string[] tempArray = new string[array.Length - 1];
-            bool isFind = false;
-
-            for (int i = 0; i < array.Length; i++)
+            
+            for (int i = 0; i < number - 1; i++)
             {
-                if (i == number - 1)
-                {
-                    isFind = true;
-                    continue;
-                }
+                tempArray[i] = array[i];
+            }
 
-                if (isFind == true)
-                {
-                    tempArray[i - 1] = array[i];
-                }
-                else
-                {
-                    tempArray[i] = array[i];
-                }
+            for (int i = number; i < array.Length; i++)
+            {
+                tempArray[i - 1] = array[i];
             }
 
             array = tempArray;
+            return array;
         }
 
         static void SearchSurname(string[] names, string[] posts)
@@ -139,7 +137,7 @@ namespace qwerty
             Console.Write("\n\nВведите фамилию: ");
             surname = Console.ReadLine();
 
-            for (int i = 0; i < names.Length;i++)
+            for (int i = 0; i < names.Length; i++)
             {
                 if (surname == GetSurname(names[i]))
                 {
