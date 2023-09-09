@@ -1,0 +1,30 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+
+            string userinput;
+
+            dictionary.Add("Марксизм", "Созданное К. Марксом и Ф. Энгельсом учение о законахобщественного развития, о неизбежности социалистической революции,практическое применение этого учения.");
+            dictionary.Add("Шовинизм", "Крайний национализм, проповедующий национальную ирасовую исключительность и разжигающий национальную вражду и ненависть.");
+            dictionary.Add("Дуализм", "1.Философское направление, признающее, в противоп.монизму, в основе мира два независимых и равноправных начала: материю и дух.2. Двойственное строение, двойственность. Д. языкового знака(асимметрическое соотношение формы и значения.");
+
+            Console.Write("Введите слово для поиска: ");
+            userinput = Console.ReadLine();
+
+            if (dictionary.ContainsKey(userinput))
+            {
+                Console.WriteLine("\n" + dictionary[userinput]);
+            }
+            else
+            {
+                Console.WriteLine("\nТакого слова нет в словаре");
+            }
+        }
+    }
+}
