@@ -6,34 +6,35 @@ namespace qwerty
     {
         static void Main(string[] args)
         {
-            DrawBar(40, 0, 0);
+            DrawBar(75, 0, 0, 100, 5);
         }
 
-        static void DrawBar(int value, int x, int y)
+        static void DrawBar(int value, int coordinateX, int coordinateY, int maxValue, int step)
         {
-            int maxValue = 100;
-            int step = 10;
+            char openBracket = '[';
+            char closeBracket = ']';
+            char fullPoint = '#';
+            char emptyPoint = '_';
 
-            string bar = "[";
+            string bar = "";
 
-            for (int i = 0; i < RoundInt(value); i+=step) 
+            bar += openBracket;
+
+            for (int i = 0; i < maxValue; i += step)
             {
-                bar += "#";
+                if (i < value)
+                {
+                    bar += fullPoint;
+                }
+                else
+                {
+                    bar += emptyPoint;
+                }
             }
 
-            for (int i = value; i < maxValue; i+=step)
-            {
-                bar += "_";
-            }
-
-            bar += "]";
-            Console.SetCursorPosition(x, y);
+            bar += closeBracket;
+            Console.SetCursorPosition(coordinateX, coordinateY);
             Console.WriteLine(bar);
-        }
-
-        static int RoundInt(int value)
-        {
-            return (value / 10 * 10);
         }
     }
 }
