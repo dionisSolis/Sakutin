@@ -6,11 +6,13 @@ namespace qwerty
     {
         static void Main(string[] args)
         {
-            DrawBar(75, 0, 0, 100, 5);
+            DrawBar(40, 0, 0, 10);
         }
 
-        static void DrawBar(int value, int coordinateX, int coordinateY, int maxValue, int step)
+        static void DrawBar(int value, int coordinateX, int coordinateY, int step)
         {
+            int maxValue = 100;
+
             char openBracket = '[';
             char closeBracket = ']';
             char fullPoint = '#';
