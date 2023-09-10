@@ -1,0 +1,67 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const string commandAddDossier = "1";
+            const string commandShowInfo = "2";
+            const string commandRemoveDossier = "3";
+            const string commandExit = "4";
+
+            string userInput = "";
+
+            Dictionary<string, string> dossiers = new Dictionary<string, string>();
+
+            while (userInput != commandExit)
+            {
+                Console.Write("1) добавить досье\r\n\r\n" +
+                    "2) вывести все досье (в одну строку через “-” фио и должность)  \r\n\r\n" +
+                    "3) удалить досье  \r\n\r\n" +
+                    "4) выход" +
+                    "\nВвод...");
+                userInput = Console.ReadLine();
+
+                switch(userInput)
+                {
+                    case commandAddDossier:
+                        string name;
+                        string post;
+
+                        Console.Write("\nВведите фио сотрудника: ");
+                        name = Console.ReadLine();
+                        Console.Write("\nВведите должность сотрудника: ");
+                        post = Console.ReadLine();
+
+                        dossiers.Add(name, post);
+                        break;
+
+                    case commandShowInfo:
+                        ShowInfo(dossiers);
+                        break;
+
+                    case commandRemoveDossier:
+                        Console.Write("\nВведите фио сотрудника для удаления: ");
+                        name = Console.ReadLine();
+
+                        dossiers.Remove(name);
+                        break;
+                }
+
+                Console.WriteLine("\nНажмите любую кнопку для обновления");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+
+        static void ShowInfo(Dictionary<string, string> dictionary)
+        {
+            foreach (var item in dictionary)
+            {
+                Console.WriteLine(item.Key + " " + item.Value);
+            }
+        }
+    }
+}
