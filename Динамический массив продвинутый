@@ -1,0 +1,45 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const string commandSum = "sum";
+            const string commandExit = "exit";
+
+            string userInput = "";
+
+            List<int> digits = new List<int>();
+            
+            while (userInput != commandExit)
+            {
+                int digit;
+
+                userInput = Console.ReadLine();
+
+                if (int.TryParse(userInput, out digit))
+                {
+                    digits.Add(digit);
+                }
+                else if (userInput == commandSum)
+                {
+                    Console.WriteLine($"\nСумма введенных чисел: {FindSum(digits)}\n");
+                }
+            }
+        }
+
+        static int FindSum(List<int> digits)
+        {
+            int sum = 0;
+
+            foreach (int digit in digits)
+            {
+                sum += digit;
+            }
+
+            return sum;
+        }
+    }
+}
