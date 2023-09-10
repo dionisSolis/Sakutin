@@ -1,0 +1,32 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int money = 0;
+
+            Queue<int> shopQueue = new Queue<int>();
+
+            shopQueue.Enqueue(100);
+            shopQueue.Enqueue(32);
+            shopQueue.Enqueue(543);
+            shopQueue.Enqueue(9854);
+            shopQueue.Enqueue(1);
+
+            while (shopQueue.Count > 0)
+            {
+                Console.WriteLine($"Счет магазина: {money}" +
+                    $"\nСледующий покупатель: {shopQueue.Peek()}");
+                money += shopQueue.Dequeue();
+                Console.Write("\nНажмите любую кнопку для обновления...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+
+            Console.WriteLine($"Все клиенты обслужены\nСчет магазина: {money}");
+        }
+    }
+}
