@@ -1,0 +1,64 @@
+using System;
+
+namespace qwery
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<string> listFirst = new List<string>();
+            List<string> listSecond = new List<string>();
+
+            listFirst.AddRange(new string[] { "1", "2", "1" });
+            ShowList(listFirst);
+            Console.Write(" + ");
+            listSecond.AddRange(new string[] { "3", "2" });
+            ShowList(listSecond);
+            Console.Write(" = ");
+            CombineTwoLists(ref listFirst, listSecond);
+            ShowList(listFirst);
+        }
+
+        static void CombineTwoLists(ref List<string> listFirst, List<string> listSecond)
+        {
+
+            listSecond.AddRange(listFirst);
+            listFirst.Clear();
+
+            for (int i = 0; i < listSecond.Count; i++)
+            {
+                if (CountItemList(listFirst, listSecond[i]) == 0)
+                {
+                    listFirst.Add(listSecond[i]);
+                }
+            }
+        }
+
+        static int CountItemList(List<string> list, string itemCount)
+        {
+            int count = 0;
+
+            foreach (string item in list)
+            {
+                if (item == itemCount)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        static void ShowList(List<string> list) 
+        {
+            Console.Write("{ ");
+
+            foreach (string item in list)
+            {
+                Console.Write(item + " ");
+            }
+
+            Console.Write("} ");
+        }
+    }
+}
