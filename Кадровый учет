@@ -64,12 +64,12 @@ namespace qwerty
         static void AddDossier(ref string[] names, ref string[] posts)
         {
             Console.Write("\n\nВведите фио работника: ");
-            names = AddArray(names, Console.ReadLine());
+            names = AddData(names, Console.ReadLine());
             Console.Write("\n\nВведите должность работника: ");
-            posts = AddArray(posts, Console.ReadLine());
+            posts = AddData(posts, Console.ReadLine());
         }
 
-        static string[] AddArray(string[] array, string userInput)
+        static string[] AddData(string[] array, string userInput)
         {
             string[] tempArray = new string[array.Length + 1];
 
@@ -106,15 +106,15 @@ namespace qwerty
             }
             else
             {
-                names = RemoveArray(names, number);
-                posts = RemoveArray(posts, number);
+                names = RemoveData(names, number);
+                posts = RemoveData(posts, number);
             }
         }
 
-        static string[] RemoveArray(string[] array, int number)
+        static string[] RemoveData(string[] array, int number)
         {
             string[] tempArray = new string[array.Length - 1];
-            
+
             for (int i = 0; i < number - 1; i++)
             {
                 tempArray[i] = array[i];
@@ -143,7 +143,6 @@ namespace qwerty
                 {
                     Console.WriteLine($"\n\n{i + 1}){names[i]} - {posts[i]}");
                     isFind = true;
-                    break;
                 }
             }
 
