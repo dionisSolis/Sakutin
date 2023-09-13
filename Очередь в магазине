@@ -13,10 +13,10 @@ namespace qwerty
             shopQueue.Enqueue(543);
             shopQueue.Enqueue(9854);
             shopQueue.Enqueue(1);
-            ProcessShop(ref shopQueue);
+            ProcessShop(shopQueue);
         }
 
-        static void ProcessShop(ref Queue<int> shopQueue)
+        static void ProcessShop(Queue<int> shopQueue)
         {
             int money = 0;
 
