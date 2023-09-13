@@ -99,8 +99,9 @@ namespace qwerty
 
             Console.Write("\n\nВведите порядковый номер досье: ");
             number = int.Parse(Console.ReadLine());
+            Console.WriteLine(number);
 
-            if (number < 1 || number >= names.Length)
+            if (number < 1 || number > names.Length)
             {
                 Console.WriteLine("\nТакого номера нет");
             }
