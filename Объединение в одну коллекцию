@@ -1,64 +1,52 @@
 using System;
 
-namespace qwery
+namespace qwerty
 {
     class Program
     {
         static void Main(string[] args)
         {
-            List<string> listFirst = new List<string>();
-            List<string> listSecond = new List<string>();
+            string[] arrayFirst = { "1", "2", "1" };
+            string[] arraySecond = { "3", "2" };
+            List<string> list = new List<string>();
 
-            listFirst.AddRange(new string[] { "1", "2", "1" });
-            ShowList(listFirst);
+            CombineListWithArray(ref list, arraySecond);
+            CombineListWithArray(ref list, arrayFirst);
+
+            ShowArray(arrayFirst);
             Console.Write(" + ");
-            listSecond.AddRange(new string[] { "3", "2" });
-            ShowList(listSecond);
-            Console.Write(" = ");
-            CombineTwoLists(ref listFirst, listSecond);
-            ShowList(listFirst);
+            ShowArray(arraySecond);
+            Console.Write(" = { ");
+
+            foreach (var item in list)
+            {
+                Console.Write("'" + item + "' ");
+            }
+
+            Console.Write("}");
         }
 
-        static void CombineTwoLists(ref List<string> listFirst, List<string> listSecond)
+        static void CombineListWithArray(ref List<string> list, string[] array) 
         {
-
-            listSecond.AddRange(listFirst);
-            listFirst.Clear();
-
-            for (int i = 0; i < listSecond.Count; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                if (CountItemList(listFirst, listSecond[i]) == 0)
+                if (list.Contains(array[i]) == false)
                 {
-                    listFirst.Add(listSecond[i]);
+                    list.Add(array[i]);
                 }
             }
         }
 
-        static int CountItemList(List<string> list, string itemCount)
-        {
-            int count = 0;
-
-            foreach (string item in list)
-            {
-                if (item == itemCount)
-                {
-                    count++;
-                }
-            }
-
-            return count;
-        }
-
-        static void ShowList(List<string> list) 
+        static void ShowArray(string[] array)
         {
             Console.Write("{ ");
 
-            foreach (string item in list)
+            foreach (string item in array)
             {
-                Console.Write(item + " ");
+                Console.Write("'" + item + "' ");
             }
 
-            Console.Write("} ");
+            Console.Write("}");
         }
     }
 }
