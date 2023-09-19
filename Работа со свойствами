@@ -1,0 +1,32 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Player player = new Player(10, 0);
+
+            player.DrawPlayer();
+        }
+    }
+
+    class Player
+    {
+        public int CoordinateX { get; private set; }
+        public int CoordinateY { get; private set; }
+
+        public Player(int coordinateX, int coordinateY)
+        {
+            CoordinateX = coordinateX;
+            CoordinateY = coordinateY;
+        }
+
+        public void DrawPlayer()
+        {
+            Console.SetCursorPosition(CoordinateX, CoordinateY);
+            Console.WriteLine('@');
+        }
+    }
+}
