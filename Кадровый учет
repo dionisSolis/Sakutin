@@ -140,7 +140,7 @@ namespace qwerty
 
             for (int i = 0; i < names.Length; i++)
             {
-                if (surname == GetSurname(names[i]))
+                if (surname == names[i].Split(' ')[0])
                 {
                     Console.WriteLine($"\n\n{i + 1}){names[i]} - {posts[i]}");
                     isFind = true;
@@ -151,23 +151,6 @@ namespace qwerty
             {
                 Console.WriteLine("\n\nРаботник не найден");
             }
-        }
-
-        static string GetSurname(string name)
-        {
-            string surname = "";
-
-            foreach (char word in name)
-            {
-                if (char.IsLetter(word) == false)
-                {
-                    break;
-                }
-
-                surname += word;
-            }
-
-            return surname;
         }
     }
 }
