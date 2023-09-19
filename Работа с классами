@@ -1,0 +1,38 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Player player = new Player("Кратос", 1000, 700, 1500);
+
+            player.ShowInfo();
+        }
+    }
+
+    class Player
+    {
+        private string _name;
+        private int _health;
+        private int _armor;
+        private int _damage;
+
+        public Player(string name, int health, int armor, int damage)
+        {
+            _name = name;
+            _health = health;
+            _armor = armor;
+            _damage = damage;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Имя - {_name}" +
+                $"\nЗдоровье - {_health}" +
+                $"\nБроня - {_armor}" +
+                $"\nАтака - {_damage}");
+        }
+    }
+}
