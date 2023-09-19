@@ -1,0 +1,168 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const string MenuAddPlayer = "1";
+            const string MenuRemovePlayer = "2";
+            const string MenuChangeBanStatusPlayer = "3";
+            const string MenuExit = "4";
+
+            DateBase dateBase = new DateBase();
+
+            string userInput = "";
+
+            while (userInput != MenuExit)
+            {
+                Console.Clear();
+
+                Console.WriteLine("База данных игроков\n");
+                dateBase.ShowPlayers();
+                Console.Write($"\n\n{MenuAddPlayer})Добавить игрока\n" +
+                    $"{MenuRemovePlayer})Удалить игрока по уникальному номеру\n" +
+                    $"{MenuChangeBanStatusPlayer})Изменить статус бана игрока по уникальному номеру\n" +
+                    $"{MenuExit})Выйти\n" +
+                    $"Ввод...");
+                userInput = Console.ReadLine();
+
+                switch (userInput )
+                {
+                    case MenuAddPlayer:
+                        string name;
+
+                        Console.Write("\nИмя: ");
+                        name = Console.ReadLine();
+
+                        dateBase.AddPlayer(name);
+                        break;
+
+                    case MenuRemovePlayer:
+                        dateBase.RemovePlayer();
+                        break;
+
+                    case MenuChangeBanStatusPlayer:
+                        dateBase.ChangeBanStatus();
+                        break;
+
+                    case MenuExit:
+                        Console.WriteLine("\nПока!");
+                        break;
+                }
+
+                Console.Write("Нажмите любую кнопку для продолжения...");
+                Console.ReadKey();
+            }
+
+        }
+    }
+
+    class DateBase
+    {
+        private List<Player> _players = new List<Player> { };
+        private string InputID()
+        {
+            string id;
+
+            Console.Write("\nУникальный номер: ");
+            id = Console.ReadLine();
+
+            return id;
+        }
+
+        public void ShowPlayers()
+        {
+            foreach (Player player in _players)
+            {
+                player.ShowInfo();
+            }
+        }
+        public void AddPlayer(string name)
+        {
+            _players.Add(new Player(CreateID(), name, 0, false));
+        }
+
+        
+        public void RemovePlayer() 
+        {
+            string id = InputID();
+
+            for (int i = 0; i <  _players.Count; i++)
+            {
+                if (id == _players[i].ID)
+                {
+                    _players.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+
+        public void ChangeBanStatus()
+        {
+            string id = InputID();
+
+            for (int i = 0; i < _players.Count; i++)
+            {
+                if (id == _players[i].ID)
+                {
+                    _players[i].ChangeBanStatus();
+                    break;
+                }
+            }
+        }
+
+        private string CreateID()
+        {
+            Random random = new Random();
+
+            int id = random.Next(10, 100);
+            bool isTaken = true;
+
+            while (isTaken && _players.Count > 0)
+            {
+                id = random.Next(10, 100);
+
+                for (int i = 0; i < _players.Count; i++)
+                {
+                    if (_players[i].ID == id.ToString())
+                        break;
+                    else if (i == _players.Count - 1)
+                        isTaken = false;
+                }
+            }
+
+            return id.ToString();
+
+        }
+    }
+    class Player
+    {
+        public string ID { get; private set; }
+        private string _name;
+        private int _level;
+        private bool _isBanned = false;
+
+        public Player(string id, string name, int level, bool isBanned)
+        {
+            ID = id;
+            _name = name;
+            _level = level;
+            _isBanned = isBanned;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"Уникальный номер {ID}" +
+                $"\nИмя {_name}" +
+                $"\nУровень {_level}" +
+                $"\nБан {_isBanned}\n");
+        }
+
+        public void ChangeBanStatus()
+        {
+            _isBanned = !_isBanned;
+        }
+    }
+}
