@@ -14,18 +14,21 @@ namespace qwerty
 
     class Player
     {
-        public int CoordinateX { get; private set; }
-        public int CoordinateY { get; private set; }
+        private int _coordinateX;
+        private int _coordinateY;
 
         public Player(int coordinateX, int coordinateY)
         {
-            CoordinateX = coordinateX;
-            CoordinateY = coordinateY;
+            _coordinateX = coordinateX;
+            _coordinateY = coordinateY;
         }
+
+        public int CoordinateX { get; private set; }
+        public int CoordinateY { get; private set; }
 
         public void DrawPlayer()
         {
-            Console.SetCursorPosition(CoordinateX, CoordinateY);
+            Console.SetCursorPosition(_coordinateX, _coordinateY);
             Console.WriteLine('@');
         }
     }
