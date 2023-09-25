@@ -7,28 +7,29 @@ namespace qwerty
         static void Main(string[] args)
         {
             Player player = new Player(10, 0);
+            Painter painter = new Painter();
 
-            player.DrawPlayer();
+            painter.DrawPlayer(player.CoordinateX, player.CoordinateY); 
         }
     }
 
     class Player
     {
-        private int _coordinateX;
-        private int _coordinateY;
-
         public Player(int coordinateX, int coordinateY)
         {
-            _coordinateX = coordinateX;
-            _coordinateY = coordinateY;
+            CoordinateX = coordinateX;
+            CoordinateY = coordinateY;
         }
 
         public int CoordinateX { get; private set; }
         public int CoordinateY { get; private set; }
+    }
 
-        public void DrawPlayer()
+    class Painter
+    {
+        public void DrawPlayer(int coordinateX, int coordinateY)
         {
-            Console.SetCursorPosition(_coordinateX, _coordinateY);
+            Console.SetCursorPosition(coordinateX, coordinateY);
             Console.WriteLine('@');
         }
     }
