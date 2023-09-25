@@ -8,10 +8,11 @@ namespace qwerty
         {
             const string MenuAddPlayer = "1";
             const string MenuRemovePlayer = "2";
-            const string MenuChangeBanStatusPlayer = "3";
-            const string MenuExit = "4";
+            const string MenuBanPlayer = "3";
+            const string MenuUnbanPlayer = "4";
+            const string MenuExit = "5";
 
-            DateBase dateBase = new DateBase();
+            Datebase datebase = new Datebase();
 
             string userInput = "";
 
@@ -20,31 +21,31 @@ namespace qwerty
                 Console.Clear();
 
                 Console.WriteLine("База данных игроков\n");
-                dateBase.ShowPlayers();
+                datebase.ShowPlayers();
                 Console.Write($"\n\n{MenuAddPlayer})Добавить игрока\n" +
                     $"{MenuRemovePlayer})Удалить игрока по уникальному номеру\n" +
-                    $"{MenuChangeBanStatusPlayer})Изменить статус бана игрока по уникальному номеру\n" +
+                    $"{MenuBanPlayer})Забанить игрока по уникальному номеру\n" +
+                    $"{MenuUnbanPlayer})Разбанить игрока по уникальному номер\n" +
                     $"{MenuExit})Выйти\n" +
                     $"Ввод...");
                 userInput = Console.ReadLine();
 
-                switch (userInput )
+                switch (userInput)
                 {
                     case MenuAddPlayer:
-                        string name;
-
-                        Console.Write("\nИмя: ");
-                        name = Console.ReadLine();
-
-                        dateBase.AddPlayer(name);
+                        datebase.AddPlayer();
                         break;
 
                     case MenuRemovePlayer:
-                        dateBase.RemovePlayer();
+                        datebase.RemovePlayer();
                         break;
 
-                    case MenuChangeBanStatusPlayer:
-                        dateBase.ChangeBanStatus();
+                    case MenuBanPlayer:
+                        datebase.BanPlayer();
+                        break;
+
+                    case MenuUnbanPlayer:
+                        datebase.UnbanPlayer();
                         break;
 
                     case MenuExit:
@@ -59,15 +60,21 @@ namespace qwerty
         }
     }
 
-    class DateBase
+    class Datebase
     {
         private List<Player> _players = new List<Player> { };
-        private string InputID()
+        private int _idCount = 0;
+        private int InputId()
         {
-            string id;
+            int id;
 
             Console.Write("\nУникальный номер: ");
-            id = Console.ReadLine();
+
+            if (int.TryParse(Console.ReadLine(), out id) == false)
+            {
+                Console.WriteLine("Уникальный номер должен быть числом");
+                return -1;
+            }
 
             return id;
         }
@@ -79,19 +86,23 @@ namespace qwerty
                 player.ShowInfo();
             }
         }
-        public void AddPlayer(string name)
+        public void AddPlayer()
         {
-            _players.Add(new Player(CreateID(), name, 0, false));
+            string name;
+
+            Console.Write("\nИмя: ");
+            name = Console.ReadLine();
+            _players.Add(new Player(_idCount++, name, 0, false));
         }
 
-        
-        public void RemovePlayer() 
-        {
-            string id = InputID();
 
-            for (int i = 0; i <  _players.Count; i++)
+        public void RemovePlayer()
+        {
+            int id = InputId();
+
+            for (int i = 0; i < _players.Count; i++)
             {
-                if (id == _players[i].ID)
+                if (id == _players[i].Id)
                 {
                     _players.RemoveAt(i);
                     break;
@@ -99,70 +110,65 @@ namespace qwerty
             }
         }
 
-        public void ChangeBanStatus()
+        public void BanPlayer()
         {
-            string id = InputID();
+            int id = InputId();
 
             for (int i = 0; i < _players.Count; i++)
             {
-                if (id == _players[i].ID)
+                if (id == _players[i].Id)
                 {
-                    _players[i].ChangeBanStatus();
+                    _players[i].Ban();
                     break;
                 }
             }
         }
 
-        private string CreateID()
+        public void UnbanPlayer()
         {
-            Random random = new Random();
+            int id = InputId();
 
-            int id = random.Next(10, 100);
-            bool isTaken = true;
-
-            while (isTaken && _players.Count > 0)
+            for (int i = 0; i < _players.Count; i++)
             {
-                id = random.Next(10, 100);
-
-                for (int i = 0; i < _players.Count; i++)
+                if (id == _players[i].Id)
                 {
-                    if (_players[i].ID == id.ToString())
-                        break;
-                    else if (i == _players.Count - 1)
-                        isTaken = false;
+                    _players[i].Unban();
+                    break;
                 }
             }
-
-            return id.ToString();
-
         }
     }
     class Player
     {
-        public string ID { get; private set; }
+        
         private string _name;
         private int _level;
         private bool _isBanned = false;
 
-        public Player(string id, string name, int level, bool isBanned)
+        public Player(int id, string name, int level, bool isBanned)
         {
-            ID = id;
+            Id = id;
             _name = name;
             _level = level;
             _isBanned = isBanned;
         }
-
+        public int Id { get; private set; }
         public void ShowInfo()
         {
-            Console.WriteLine($"Уникальный номер {ID}" +
+            Console.WriteLine($"Уникальный номер {Id}" +
                 $"\nИмя {_name}" +
                 $"\nУровень {_level}" +
                 $"\nБан {_isBanned}\n");
         }
 
-        public void ChangeBanStatus()
+        public void Ban()
         {
-            _isBanned = !_isBanned;
+            _isBanned = true;
+        }
+
+        public void Unban()
+        {
+            _isBanned = false;
         }
     }
 }
