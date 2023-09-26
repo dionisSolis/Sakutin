@@ -1,0 +1,129 @@
+using System;
+using System.Dynamic;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const string MenuTakeCard = "1";
+            const string MenuExit = "2";
+
+            bool isPlay = true;
+            string userInput;
+
+            Player player = new Player();
+
+            while(isPlay)
+            {
+                Console.Write($"Колода карт\n{MenuTakeCard})Взять карту/ы\n{MenuExit})Выйти и показать колоду\nВвод...");
+                userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case "1":
+                        player.TakeCard();
+                        break;
+
+                    case "2":
+                        isPlay = false;
+                        break;
+                }
+
+                if (player.PlayersDeck.Count == player.GetAmountCards())
+                {
+                    Console.WriteLine("Карты закончились, набор невозможен");
+                    isPlay = false;
+                }
+
+                Console.Write("Нажмите любую кнопку для обновления...");
+                Console.ReadKey();
+            }
+
+            player.ShowPlayersDeck();
+        }
+    }
+
+    class Player
+    {
+        private Deck _deck = new Deck();
+        public List<Card> PlayersDeck { get; private set; } 
+
+        public int GetAmountCards()
+        {
+            return _deck.Cards.Count;
+        }
+        public void TakeCard()
+        {
+            Random random = new Random();
+            int amountCard = InputAmountCard();
+
+            for (int i = amountCard; i > 0; i--)
+            {
+                int indexCard = random.Next(_deck.Cards.Count);
+
+                Console.WriteLine($"{_deck.Cards[i].Value} {_deck.Cards[i].Type}");
+
+                PlayersDeck.Add(_deck.Cards[indexCard]);
+                _deck.Cards.RemoveAt(indexCard);
+            }
+        }
+
+        private int InputAmountCard()
+        {
+            int amountCard = 1;
+
+            Console.Write("\nВведите количество карт для набора. По умолчанию количество карт = 1\nВвод...");
+            int.TryParse(Console.ReadLine(), out amountCard);
+
+            while (amountCard > _deck.Cards.Count)
+            {
+                Console.WriteLine($"В колоде нет такого количества карт. В ней осталось {_deck.Cards.Count}");
+                Console.Write("\nВведите количество карт для набора.\nВвод...");
+                int.TryParse(Console.ReadLine(), out amountCard);
+            }
+
+            return amountCard;
+        }
+
+        public void ShowPlayersDeck()
+        {
+            Console.WriteLine("\nКолода игрока\n ");
+
+            foreach (Card card in PlayersDeck)
+            {
+                Console.WriteLine($"{card.Type} {card.Value}");
+            }
+        }
+    }
+    class Deck
+    {
+        public List<Card> Cards = new List<Card> { };
+        public Deck()
+        {
+            string[] types = new string[] { "черви", "крести", "буби", "пики" };
+            string[] values = new string[] {"6" ,"7", "8", "9", "10", "валет", "дама", "король", "туз" };
+
+            foreach (string type in types)
+            {
+                foreach (string value in values)
+                {
+                    Cards.Add(new Card(type, value));
+                }
+            }
+        }
+    }
+
+    class Card
+    {
+        public Card(string type, string value)
+        {
+            Type = type;
+            Value = value;
+        }
+
+        public string Type { get; private set; }
+        public string Value { get; private set; }
+    }
+}
