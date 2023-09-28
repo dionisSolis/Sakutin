@@ -97,36 +97,48 @@ namespace qwerty
 
         public void RemovePlayer()
         {
-            Player player = GetPlayer(InputId());
+            Player player;
 
-            _players.Remove(player);
+            if (TryGetPlayer(InputId(), out player))
+            {
+                _players.Remove(player);
+            }
         }
 
         public void BanPlayer()
         {
-            Player player = GetPlayer(InputId());
+            Player player;
 
-            player.Ban();
+            if (TryGetPlayer(InputId(), out player))
+            {
+                player.Ban();
+            }
         }
 
         public void UnbanPlayer()
         {
-            Player player = GetPlayer(InputId());
+            Player player;
 
-            player.Unban();
+            if (TryGetPlayer(InputId(), out player))
+            {
+                player.Unban();
+            }
         }
 
-        private Player GetPlayer(int id)
+        private bool TryGetPlayer(int id, out Player player)
         {
-            foreach (Player player in _players)
+            player = null;
+
+            foreach (Player playerToSearch in _players)
             {
-                if (player.Id == id) 
+                if (playerToSearch.Id == id)
                 {
-                    return player;
+                    player = playerToSearch;
+                    return true;
                 }
             }
 
-            return null;
+            return false;
         }
     }
 
