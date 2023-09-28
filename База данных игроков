@@ -56,7 +56,6 @@ namespace qwerty
                 Console.Write("Нажмите любую кнопку для продолжения...");
                 Console.ReadKey();
             }
-
         }
     }
 
@@ -86,6 +85,7 @@ namespace qwerty
                 player.ShowInfo();
             }
         }
+
         public void AddPlayer()
         {
             string name;
@@ -94,7 +94,6 @@ namespace qwerty
             name = Console.ReadLine();
             _players.Add(new Player(_idCount++, name, 0, false));
         }
-
 
         public void RemovePlayer()
         {
@@ -138,9 +137,9 @@ namespace qwerty
             }
         }
     }
+
     class Player
     {
-        
         private string _name;
         private int _level;
         private bool _isBanned = false;
@@ -152,7 +151,9 @@ namespace qwerty
             _level = level;
             _isBanned = isBanned;
         }
+
         public int Id { get; private set; }
+
         public void ShowInfo()
         {
             Console.WriteLine($"Уникальный номер {Id}" +
