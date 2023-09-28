@@ -1,4 +1,5 @@
 using System;
+using System.Reflection.Emit;
 
 namespace qwerty
 {
@@ -13,13 +14,12 @@ namespace qwerty
             const string MenuExit = "5";
 
             Datebase datebase = new Datebase();
-
+            bool isPlay = true;
             string userInput = "";
 
-            while (userInput != MenuExit)
+            while (isPlay)
             {
                 Console.Clear();
-
                 Console.WriteLine("База данных игроков\n");
                 datebase.ShowPlayers();
                 Console.Write($"\n\n{MenuAddPlayer})Добавить игрока\n" +
@@ -49,7 +49,7 @@ namespace qwerty
                         break;
 
                     case MenuExit:
-                        Console.WriteLine("\nПока!");
+                        isPlay = false;
                         break;
                 }
 
@@ -62,17 +62,17 @@ namespace qwerty
     class Datebase
     {
         private List<Player> _players = new List<Player> { };
-        private int _idCount = 0;
+        private int _idCounter = 0;
+
         private int InputId()
         {
             int id;
 
             Console.Write("\nУникальный номер: ");
 
-            if (int.TryParse(Console.ReadLine(), out id) == false)
+            while (int.TryParse(Console.ReadLine(), out id) == false)
             {
-                Console.WriteLine("Уникальный номер должен быть числом");
-                return -1;
+                Console.WriteLine("Уникальный номер должен быть числом\nУникальный номер...");
             }
 
             return id;
@@ -92,49 +92,41 @@ namespace qwerty
 
             Console.Write("\nИмя: ");
             name = Console.ReadLine();
-            _players.Add(new Player(_idCount++, name, 0, false));
+            _players.Add(new Player(_idCounter++, name, 0, false));
         }
 
         public void RemovePlayer()
         {
-            int id = InputId();
+            Player player = GetPlayer(InputId());
 
-            for (int i = 0; i < _players.Count; i++)
-            {
-                if (id == _players[i].Id)
-                {
-                    _players.RemoveAt(i);
-                    break;
-                }
-            }
+            _players.Remove(player);
         }
 
         public void BanPlayer()
         {
-            int id = InputId();
+            Player player = GetPlayer(InputId());
 
-            for (int i = 0; i < _players.Count; i++)
-            {
-                if (id == _players[i].Id)
-                {
-                    _players[i].Ban();
-                    break;
-                }
-            }
+            player.Ban();
         }
 
         public void UnbanPlayer()
         {
-            int id = InputId();
+            Player player = GetPlayer(InputId());
 
-            for (int i = 0; i < _players.Count; i++)
+            player.Unban();
+        }
+
+        private Player GetPlayer(int id)
+        {
+            foreach (Player player in _players)
             {
-                if (id == _players[i].Id)
+                if (player.Id == id) 
                 {
-                    _players[i].Unban();
-                    break;
+                    return player;
                 }
             }
+
+            return null;
         }
     }
 
