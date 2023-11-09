@@ -1,129 +1,120 @@
 using System;
-using System.Dynamic;
 
 namespace qwerty
 {
     class Program
     {
+        const string CommandExit = "exit";
+
         static void Main(string[] args)
         {
-            const string MenuTakeCard = "1";
-            const string MenuExit = "2";
-
-            bool isPlay = true;
-            string userInput;
-
             Player player = new Player();
 
-            while(isPlay)
+            string userInput = "";
+            int amountOfCardsInDeck = 36;
+
+            while (userInput != CommandExit && amountOfCardsInDeck > 0)
             {
-                Console.Write($"Колода карт\n{MenuTakeCard})Взять карту/ы\n{MenuExit})Выйти и показать колоду\nВвод...");
+                Console.Clear();
+
+                int amountOfCardsToTake = 0;
+
+                Console.Write($"Количество карт в колоде: {amountOfCardsInDeck}\nВведите количество карт для набора или exit для выхода\nВвод...");
                 userInput = Console.ReadLine();
 
-                switch (userInput)
+                if (userInput != CommandExit && int.TryParse(userInput, out amountOfCardsToTake))
                 {
-                    case "1":
-                        player.TakeCard();
-                        break;
-
-                    case "2":
-                        isPlay = false;
-                        break;
+                    if (amountOfCardsToTake > 0 && amountOfCardsToTake <= amountOfCardsInDeck)
+                    {
+                        player.AddCard(amountOfCardsToTake);
+                        amountOfCardsInDeck -= player.GetAmountOfPlayersCards();
+                        Console.WriteLine("\nУспешно добавлено!");
+                    }
+                    else 
+                        Console.WriteLine("\nОшибка при вводе числа");
                 }
+                else if (userInput == CommandExit)
+                    Console.WriteLine("\nЗавершение программы");
+                else
+                    Console.WriteLine("\nНарушено условие ввода");
 
-                if (player.PlayersDeck.Count == player.GetAmountCards())
-                {
-                    Console.WriteLine("Карты закончились, набор невозможен");
-                    isPlay = false;
-                }
-
-                Console.Write("Нажмите любую кнопку для обновления...");
+                Console.WriteLine("\n\nНажмите любую кнопку для обновления");
                 Console.ReadKey();
             }
 
-            player.ShowPlayersDeck();
+            player.ShowInfo();
         }
     }
 
     class Player
     {
-        private Deck _deck = new Deck();
-        public List<Card> PlayersDeck { get; private set; } 
-
-        public int GetAmountCards()
+        private List<Card> _playersCards = new List<Card> ();
+        private Deck deck = new Deck();
+        public void ShowInfo()
         {
-            return _deck.Cards.Count;
-        }
-        public void TakeCard()
-        {
-            Random random = new Random();
-            int amountCard = InputAmountCard();
+            Console.WriteLine("\nКолода игрока");
 
-            for (int i = amountCard; i > 0; i--)
+            for (int i = 0; i <  _playersCards.Count; i++)
             {
-                int indexCard = random.Next(_deck.Cards.Count);
-
-                Console.WriteLine($"{_deck.Cards[i].Value} {_deck.Cards[i].Type}");
-
-                PlayersDeck.Add(_deck.Cards[indexCard]);
-                _deck.Cards.RemoveAt(indexCard);
+                _playersCards[i].ShowInfo();
+            }
+        }
+        public void AddCard(int amount)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                _playersCards.Add(deck.GetCard());
             }
         }
 
-        private int InputAmountCard()
+        public int GetAmountOfPlayersCards()
         {
-            int amountCard = 1;
-
-            Console.Write("\nВведите количество карт для набора. По умолчанию количество карт = 1\nВвод...");
-            int.TryParse(Console.ReadLine(), out amountCard);
-
-            while (amountCard > _deck.Cards.Count)
-            {
-                Console.WriteLine($"В колоде нет такого количества карт. В ней осталось {_deck.Cards.Count}");
-                Console.Write("\nВведите количество карт для набора.\nВвод...");
-                int.TryParse(Console.ReadLine(), out amountCard);
-            }
-
-            return amountCard;
+            return _playersCards.Count;
         }
 
-        public void ShowPlayersDeck()
-        {
-            Console.WriteLine("\nКолода игрока\n ");
-
-            foreach (Card card in PlayersDeck)
-            {
-                Console.WriteLine($"{card.Type} {card.Value}");
-            }
-        }
     }
     class Deck
     {
-        public List<Card> Cards = new List<Card> { };
+        private List<Card> _cards = new List<Card> ();
         public Deck()
         {
-            string[] types = new string[] { "черви", "крести", "буби", "пики" };
-            string[] values = new string[] {"6" ,"7", "8", "9", "10", "валет", "дама", "король", "туз" };
+            string[] suits = { "черви", "крести", "пики", "буби" };
+            string[] values = { "6", "7", "8", "9", "10", "Валет", "Дама", "Король", "Туз" };
 
-            foreach (string type in types)
+            foreach (string value in values)
             {
-                foreach (string value in values)
+                foreach (string suit in suits)
                 {
-                    Cards.Add(new Card(type, value));
+                    _cards.Add(new Card(value, suit));
                 }
             }
+        }
+
+        public Card GetCard()
+        {
+            Random random = new Random();
+            int numberCard = random.Next(_cards.Count);
+            Card card = _cards[numberCard];
+
+            _cards.RemoveAt(numberCard);
+            return card;
         }
     }
 
     class Card
     {
-        public Card(string type, string value)
+        private string _value;
+        private string _suit;
+
+        public Card(string value, string suit)
         {
-            Type = type;
-            Value = value;
+            _value = value;
+            _suit = suit;
         }
 
-        public string Type { get; private set; }
-        public string Value { get; private set; }
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{_value} {_suit}");
+        }
     }
 }
