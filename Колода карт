@@ -77,7 +77,7 @@ namespace qwerty
     }
     static class Deck
     {
-        static public List<Card> deck = new List<Card>();
+        static private List<Card> deck = new List<Card>();
         static Deck()
         {
             s_fullDeck(deck);
