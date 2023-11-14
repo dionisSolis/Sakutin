@@ -4,79 +4,86 @@ namespace qwerty
 {
     class Program
     {
-        const string CommandExit = "exit";
-
         static void Main(string[] args)
         {
+            const string CommandExit = "exit";
+
             Player player = new Player();
+            bool isPlay = true;
 
-            string userInput = "";
-            int amountOfCardsInDeck = 36;
+            Console.WriteLine("К О Л О Д А  К А Р Т\n");
 
-            while (userInput != CommandExit && amountOfCardsInDeck > 0)
+            while (isPlay)
             {
-                Console.Clear();
+                int amountOfTakingCards = 0;
+                string userInput = "";
 
-                int amountOfCardsToTake = 0;
+                Console.WriteLine($"В колоде {Deck.GetAmountOfCards()}\nВведите количество карт для набора или {CommandExit} для выхода");
 
-                Console.Write($"Количество карт в колоде: {amountOfCardsInDeck}\nВведите количество карт для набора или exit для выхода\nВвод...");
-                userInput = Console.ReadLine();
-
-                if (userInput != CommandExit && int.TryParse(userInput, out amountOfCardsToTake))
+                while (userInput != CommandExit && int.TryParse(userInput, out amountOfTakingCards) == false) 
                 {
-                    if (amountOfCardsToTake > 0 && amountOfCardsToTake <= amountOfCardsInDeck)
-                    {
-                        player.AddCard(amountOfCardsToTake);
-                        amountOfCardsInDeck -= player.GetAmountOfPlayersCards();
-                        Console.WriteLine("\nУспешно добавлено!");
-                    }
-                    else 
-                        Console.WriteLine("\nОшибка при вводе числа");
+                    Console.Write("Ввод...");
+                    userInput = Console.ReadLine();
                 }
-                else if (userInput == CommandExit)
-                    Console.WriteLine("\nЗавершение программы");
-                else
-                    Console.WriteLine("\nНарушено условие ввода");
 
-                Console.WriteLine("\n\nНажмите любую кнопку для обновления");
+                if (userInput != CommandExit)
+                {
+                    player.GetAmountOfTakingCards(amountOfTakingCards);
+                }
+
+                if (userInput == CommandExit || Deck.GetAmountOfCards() == 0) {
+                    isPlay = false;
+                }
+
+                Console.Write("\n\nНажмите любую кнопку для обновления...");
                 Console.ReadKey();
+                Console.Clear();
             }
 
-            player.ShowInfo();
+            player.ShowInfo(); 
         }
     }
 
     class Player
     {
-        private List<Card> _playersCards = new List<Card> ();
-        private Deck deck = new Deck();
+        private List<Card> _playersCards = new List<Card>();
         public void ShowInfo()
         {
-            Console.WriteLine("\nКолода игрока");
+            Console.WriteLine("Колода игрока\n");
 
-            for (int i = 0; i <  _playersCards.Count; i++)
+            foreach (Card card in _playersCards)
             {
-                _playersCards[i].ShowInfo();
-            }
-        }
-        public void AddCard(int amount)
-        {
-            for (int i = 0; i < amount; i++)
-            {
-                _playersCards.Add(deck.GetCard());
+                card.ShowInfo();
             }
         }
 
-        public int GetAmountOfPlayersCards()
+        public void GetAmountOfTakingCards(int amount)
         {
-            return _playersCards.Count;
+            if (amount <= Deck.GetAmountOfCards() && amount >= 1)
+            {
+                for (int i = 0; i < amount; i++)
+                {
+                    _playersCards.Add(Deck.GetCard());
+                }
+
+                Console.WriteLine("УСПЕШНО!");
+            }
+            else
+            {
+                Console.WriteLine("ОШИБКА: при вводе количества карт");
+            }
         }
 
     }
-    class Deck
+    static class Deck
     {
-        private List<Card> _cards = new List<Card> ();
-        public Deck()
+        static public List<Card> deck = new List<Card>();
+        static Deck()
+        {
+            s_fullDeck(deck);
+        }
+
+        static private void s_fullDeck(List<Card> deck)
         {
             string[] suits = { "черви", "крести", "пики", "буби" };
             string[] values = { "6", "7", "8", "9", "10", "Валет", "Дама", "Король", "Туз" };
@@ -85,19 +92,44 @@ namespace qwerty
             {
                 foreach (string suit in suits)
                 {
-                    _cards.Add(new Card(value, suit));
+                    deck.Add(new Card(value, suit));
                 }
+            }
+
+            s_shuffleList(deck);
+        }
+
+        static private void s_shuffleList(List <Card> list)
+        {
+            Random random = new Random();
+            List<Card> newList = new List<Card>();
+            int countOfList = list.Count;
+
+            while (newList.Count != countOfList)
+            {
+                int index = random.Next(list.Count);
+
+                newList.Add(list[index]);
+                list.RemoveAt(index);
+            }
+
+            foreach (Card element in newList)
+            {
+                list.Add(element);
             }
         }
 
-        public Card GetCard()
+        static public Card GetCard()
         {
-            Random random = new Random();
-            int numberCard = random.Next(_cards.Count);
-            Card card = _cards[numberCard];
+            Card card = deck[0];
 
-            _cards.RemoveAt(numberCard);
+            deck.RemoveAt(0);
             return card;
+        }
+
+        static public int GetAmountOfCards()
+        {
+            return deck.Count;
         }
     }
 
