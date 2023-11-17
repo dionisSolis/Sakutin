@@ -79,13 +79,13 @@ namespace qwerty
     }
     class Deck
     {
-        private List<Card> _deck = new List<Card>();
+        private List<Card> _cards = new List<Card>();
         public Deck()
         {
-            FullDeck(_deck);
+            CreateCards(_cards);
         }
 
-        private void FullDeck(List<Card> deck)
+        private void CreateCards(List<Card> _cards)
         {
             string[] suits = { "черви", "крести", "пики", "буби" };
             string[] values = { "6", "7", "8", "9", "10", "Валет", "Дама", "Король", "Туз" };
@@ -94,11 +94,11 @@ namespace qwerty
             {
                 foreach (string suit in suits)
                 {
-                    deck.Add(new Card(value, suit));
+                    _cards.Add(new Card(value, suit));
                 }
             }
 
-            ShuffleList(deck);
+            ShuffleList(_cards);
         }
 
         private void ShuffleList(List<Card> list)
@@ -123,15 +123,15 @@ namespace qwerty
 
         public Card GetCard()
         {
-            Card card = _deck[0];
+            Card card = _cards[0];
 
-            _deck.RemoveAt(0);
+            _cards.RemoveAt(0);
             return card;
         }
 
         public int GetAmountOfCards()
         {
-            return _deck.Count;
+            return _cards.Count;
         }
     }
 
