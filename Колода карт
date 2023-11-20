@@ -29,7 +29,19 @@ namespace qwerty
 
                 if (userInput != CommandExit)
                 {
-                    player.GetAmountOfTakingCards(amountOfTakingCards,deck.GetAmountOfCards(), deck);
+                    if (amountOfTakingCards <= deck.GetAmountOfCards() && amountOfTakingCards >= 1)
+                    {
+                        for (int i = 0; i < amountOfTakingCards; i++)
+                        {
+                            player.AddCard(deck.GetCard());
+                        }
+
+                        Console.WriteLine("УСПЕШНО!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("ОШИБКА: при вводе значения карт");
+                    }
                 }
 
                 if (userInput == CommandExit || deck.GetAmountOfCards() == 0)
@@ -48,41 +60,44 @@ namespace qwerty
 
     class Player
     {
-        private List<Card> _playersCards = new List<Card>();
+        private List<Card> _cards = new List<Card>();
+
         public void ShowInfo()
         {
             Console.WriteLine("Колода игрока\n");
 
-            foreach (Card card in _playersCards)
+            foreach (Card card in _cards)
             {
                 card.ShowInfo();
             }
         }
 
-        public void GetAmountOfTakingCards(int amount, int amountCardsInDeck, Deck deck)
+        public void AddCard(Card card)
         {
-            if (amount <= amountCardsInDeck && amount >= 1)
-            {
-                for (int i = 0; i < amount; i++)
-                {
-                    _playersCards.Add(deck.GetCard());
-                }
-
-                Console.WriteLine("УСПЕШНО!");
-            }
-            else
-            {
-                Console.WriteLine("ОШИБКА: при вводе количества карт");
-            }
+            _cards.Add(card);
         }
-
     }
+
     class Deck
     {
         private List<Card> _cards = new List<Card>();
+
         public Deck()
         {
             CreateCards(_cards);
+        }
+
+        public Card GetCard()
+        {
+            Card card = _cards[0];
+
+            _cards.RemoveAt(0);
+            return card;
+        }
+
+        public int GetAmountOfCards()
+        {
+            return _cards.Count;
         }
 
         private void CreateCards(List<Card> _cards)
@@ -98,40 +113,27 @@ namespace qwerty
                 }
             }
 
-            ShuffleList(_cards);
+            ShuffleCards();
         }
 
-        private void ShuffleList(List<Card> list)
+        private void ShuffleCards()
         {
             Random random = new Random();
             List<Card> newList = new List<Card>();
-            int countOfList = list.Count;
+            int countOfCards = _cards.Count;
 
-            while (newList.Count != countOfList)
+            while (newList.Count != countOfCards)
             {
-                int index = random.Next(list.Count);
+                int index = random.Next(_cards.Count);
 
-                newList.Add(list[index]);
-                list.RemoveAt(index);
+                newList.Add(_cards[index]);
+                _cards.RemoveAt(index);
             }
 
             foreach (Card element in newList)
             {
-                list.Add(element);
+                _cards.Add(element);
             }
-        }
-
-        public Card GetCard()
-        {
-            Card card = _cards[0];
-
-            _cards.RemoveAt(0);
-            return card;
-        }
-
-        public int GetAmountOfCards()
-        {
-            return _cards.Count;
         }
     }
 
