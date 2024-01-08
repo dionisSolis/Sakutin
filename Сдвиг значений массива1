@@ -10,7 +10,7 @@ namespace qwerty
 
             int arrayLength = 4;
             int[] arrayWithDoubleLength = new int[arrayLength*2];
-            int countToMove = 4;
+            int countToMove = 0;
 
             Console.WriteLine("Массив");
 
