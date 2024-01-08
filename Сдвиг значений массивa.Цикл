@@ -1,0 +1,55 @@
+using System;
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            int randomLimit = 30;
+
+            int arrayLength = 4;
+            int[] array = new int[arrayLength];
+            int countToMove;
+
+            Console.WriteLine("Массив");
+
+            for (int i = 0; i < arrayLength; i++)
+            {
+                array[i] = random.Next(randomLimit);
+                Console.Write(array[i] + " ");
+            }
+
+            Console.Write("\n\nВведите значение сдвига влево: ");
+
+            while (int.TryParse(Console.ReadLine(), out countToMove) == false || countToMove < 0)
+            {
+                Console.Write("Введите корректное значение: ");
+            }
+            
+            if (arrayLength < countToMove) {
+                countToMove -= arrayLength;
+            }
+
+            while (countToMove > 0)
+            {
+                for (int i = 0; i < arrayLength - 1; i++)
+                {
+                    int digit = array[i + 1];
+
+                    array[i + 1] = array[i];
+                    array[i] = digit;
+                }
+
+                countToMove--;
+            }
+
+            Console.WriteLine("\nМассив после сдвига");
+
+            for (int i = 0; i < arrayLength; i++)
+            {
+                Console.Write(array[i] + " ");
+            }
+        }
+    }
+}
