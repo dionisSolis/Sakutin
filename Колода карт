@@ -20,33 +20,30 @@ namespace qwerty
                 string userInput = "";
 
                 Console.WriteLine($"В колоде {deck.GetAmountOfCards()}\nВведите количество карт для набора или {CommandExit} для выхода");
-
-                while (userInput != CommandExit && int.TryParse(userInput, out amountOfTakingCards) == false)
-                {
-                    Console.Write("Ввод...");
-                    userInput = Console.ReadLine();
-                }
-
-                if (userInput != CommandExit)
-                {
-                    if (amountOfTakingCards <= deck.GetAmountOfCards() && amountOfTakingCards >= 1)
-                    {
-                        for (int i = 0; i < amountOfTakingCards; i++)
-                        {
-                            player.AddCard(deck.GetCard());
-                        }
-
-                        Console.WriteLine("УСПЕШНО!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("ОШИБКА: при вводе значения карт");
-                    }
-                }
+                userInput = Console.ReadLine();
 
                 if (userInput == CommandExit || deck.GetAmountOfCards() == 0)
                 {
                     isPlay = false;
+                }
+                else
+                {
+                    if (int.TryParse(userInput, out amountOfTakingCards) == true)
+                    {
+                        if (amountOfTakingCards <= deck.GetAmountOfCards() && amountOfTakingCards >= 1)
+                        {
+                            for (int i = 0; i < amountOfTakingCards; i++)
+                            {
+                                player.AddCard(deck.GetCard());
+                            }
+
+                            Console.WriteLine("УСПЕШНО!");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("ОШИБКА ВВОДА");
+                    }
                 }
 
                 Console.Write("\n\nНажмите любую кнопку для обновления...");
@@ -74,7 +71,10 @@ namespace qwerty
 
         public void AddCard(Card card)
         {
-            _cards.Add(card);
+            if (card is not null)
+            {
+                _cards.Add(card);
+            }
         }
     }
 
@@ -89,10 +89,16 @@ namespace qwerty
 
         public Card GetCard()
         {
-            Card card = _cards[0];
+            if (_cards.Count > 0)
+            {
+                Card card = _cards[0];
 
-            _cards.RemoveAt(0);
-            return card;
+                _cards.RemoveAt(0);
+
+                return card;
+            }
+
+            return null;
         }
 
         public int GetAmountOfCards()
