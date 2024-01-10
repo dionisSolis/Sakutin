@@ -6,12 +6,19 @@ namespace qwerty
     {
         static void Main(string[] args)
         {
-            DrawBar(40, 0, 0, 10);
+            DrawBar(40, 0, 0);
         }
 
-        static void DrawBar(int value, int coordinateX, int coordinateY, int step)
+        static void DrawBar(int value, int coordinateX, int coordinateY)
         {
             int maxValue = 100;
+            int step = 10;
+
+            if (value > maxValue || value < 0)
+            {
+                Console.WriteLine("Ошибка при вводе значения");
+                return;
+            }
 
             char openBracket = '[';
             char closeBracket = ']';
