@@ -6,13 +6,14 @@ namespace qwerty
     {
         static void Main(string[] args)
         {
-            DrawBar(40, 0, 0);
+            DrawBar(75, 0, 0);
         }
 
         static void DrawBar(int value, int coordinateX, int coordinateY)
         {
             int maxValue = 100;
-            int step = 10;
+            int lengthBar = 20;
+            int step = maxValue / lengthBar;
 
             if (value > maxValue || value < 0)
             {
