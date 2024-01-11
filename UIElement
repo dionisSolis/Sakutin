@@ -12,13 +12,14 @@ namespace qwerty
         static void DrawBar(int value, int lengthBar, int coordinateX, int coordinateY)
         {
             int maxValue = 100;
-            int step = maxValue / lengthBar;
 
-            if (value > maxValue || value < 0)
+            if (value > maxValue || value < 0 || lengthBar > maxValue || lengthBar <= 0)
             {
                 Console.WriteLine("Ошибка при вводе значения");
                 return;
             }
+
+            int step = maxValue / lengthBar;
 
             char openBracket = '[';
             char closeBracket = ']';
