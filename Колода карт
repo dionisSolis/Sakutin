@@ -87,6 +87,7 @@ namespace qwerty
         public int AmountOfCards 
         { 
             get { return _cards.Count; } 
+            private set { }
         }
         public Deck()
         {
