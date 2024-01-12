@@ -1,0 +1,190 @@
+using System;
+
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const string MenuAddBook = "1";
+            const string MenuRemoveBook = "2";
+            const string MenuShowAllBooks = "3";
+            const string MenuShowBooksByParameter = "4";
+            const string MenuExit = "exit";
+
+            Library library = new Library();
+            bool isPlay = true;
+
+            while (isPlay == true)
+            {
+                Console.Write("Х Р А Н И Л И Щ Е  К Н И Г\n" +
+                    $"{MenuAddBook})Добавить книгу " +
+                    $"\n{MenuRemoveBook})Удалить книгу " +
+                    $"\n{MenuShowAllBooks})Вывести список всех книг " +
+                    $"\n{MenuShowBooksByParameter})Вывести список книг по указанному параметру " +
+                    $"\nВведите номер команды({MenuExit} для выхода)\n" +
+                    $"Ввод...");
+
+                switch (Console.ReadLine())
+                {
+                    case MenuAddBook:
+                        library.AddBook();
+                        break;
+
+                    case MenuRemoveBook:
+                        library.RemoveBook();
+                        break;
+
+                    case MenuShowAllBooks:
+                        library.ShowAllBooks();
+                        break;
+
+                    case MenuShowBooksByParameter:
+                        library.ShowBooksByParameter();
+                        break;
+
+                    case MenuExit:
+                        isPlay = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Ошибка ввода");
+                        break;
+                }
+
+                Console.Write("\n\nНажмите любую кнопку для обновления...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+
+    class Library
+    {
+        private List<Book> _books;
+
+        public Library()
+        {
+            _books = new List<Book>();
+        }
+
+        public void AddBook()
+        {
+            Console.Write("\nНазвание: ");
+            string title = Console.ReadLine();
+
+            Console.Write("\nАвтор: ");
+            string author = Console.ReadLine();
+
+            int yearRelease = InputCorrectYear();
+
+            _books.Add(new Book(title, author, yearRelease));
+        }
+
+        public void RemoveBook()
+        {
+            Console.WriteLine("\nНомер книги: ");
+            int numberBook;
+
+            while (int.TryParse(Console.ReadLine(), out numberBook) == false || numberBook < 1 || numberBook > _books.Count)
+            {
+                Console.Write("\nВведите корректный номер\nНомер книги: ");
+            }
+
+            _books.RemoveAt(numberBook - 1);
+        }
+
+        public void ShowAllBooks()
+        {
+            Console.WriteLine("\nВсе книги");
+
+            for (int i = 0; i < _books.Count; i++)
+            {
+                Console.Write(i + 1 + ")");
+                _books[i].ShowInfo();
+            }
+        }
+
+        public void ShowBooksByParameter()
+        {
+            Console.Write("\nВведите параметр (название, автор, год выпуска): ");
+            string parameter = Console.ReadLine().ToLower();
+
+            Console.Write("\nВведите значение: ");
+            string value = Console.ReadLine().ToLower();
+
+            Console.WriteLine("\nНайденные книги");
+
+            foreach (Book book in _books)
+            {
+                switch (parameter)
+                {
+                    case "название":
+                        ChooseBooksByParameter(value, book.Title, book);
+                        break;
+
+                    case "автор":
+                        ChooseBooksByParameter(value, book.Author, book);
+                        break;
+
+                    case "год выпуска":
+                        ChooseBooksByParameter(value, book.YearRelease.ToString(), book);
+                        break;
+
+                    default:
+                        Console.WriteLine("Параметр не найден");
+                        return;
+                }
+            }
+        }
+        
+        private int InputCorrectYear()
+        {
+            int yearRelease = 0;
+            bool validYear = false;
+
+            while (!validYear)
+            {
+                Console.Write("\nГод выпуска: ");
+
+                if (!int.TryParse(Console.ReadLine(), out yearRelease) || yearRelease < 0 || yearRelease > DateTime.Now.Year)
+                {
+                    Console.WriteLine("Некорректный ввод для года выпуска. Пожалуйста, введите целое число.");
+                }
+                else
+                {
+                    validYear = true;
+                }
+            }
+
+            return yearRelease;
+        }
+
+        private void ChooseBooksByParameter(string value, string booksValue, Book book)
+        {
+            if (value == booksValue.ToLower())
+            {
+                book.ShowInfo();
+            }
+        }
+    }
+
+    class Book
+    {
+        public string Title { get; private set; }
+        public string Author { get; private set; }
+        public int YearRelease { get; private set; }
+
+        public Book(string title, string author, int yearRelease)
+        {
+            Title = title;
+            Author = author;
+            YearRelease = yearRelease;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine(Title + " - " + Author + " " + YearRelease + "г.");
+        }
+    }
+}
