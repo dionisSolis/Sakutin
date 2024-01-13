@@ -107,7 +107,11 @@ namespace qwerty
 
         public void ShowBooksByParameter()
         {
-            Console.Write("\nВведите параметр (название, автор, год выпуска): ");
+            const string ParameterTitle = "название";
+            const string ParameterAuthor = "автор";
+            const string ParameterYearRelease = "год выпуска";
+
+            Console.Write($"\nВведите параметр ({ParameterTitle}, {ParameterAuthor}, {ParameterYearRelease}): ");
             string parameter = Console.ReadLine().ToLower();
 
             Console.Write("\nВведите значение: ");
@@ -119,16 +123,16 @@ namespace qwerty
             {
                 switch (parameter)
                 {
-                    case "название":
-                        ChooseBooksByParameter(value, book.Title, book);
+                    case ParameterTitle:
+                        ChooseBooksByTitle(value, book.Title, book);
                         break;
 
-                    case "автор":
-                        ChooseBooksByParameter(value, book.Author, book);
+                    case ParameterAuthor:
+                        ChooseBooksByAuthor(value, book.Author, book);
                         break;
 
-                    case "год выпуска":
-                        ChooseBooksByParameter(value, book.YearRelease.ToString(), book);
+                    case ParameterYearRelease:
+                        ChooseBooksByYearRelease(value, book.YearRelease.ToString(), book);
                         break;
 
                     default:
@@ -137,34 +141,50 @@ namespace qwerty
                 }
             }
         }
-        
+
         private int InputCorrectYear()
         {
             int yearRelease = 0;
-            bool validYear = false;
+            bool isValidYear = false;
 
-            while (!validYear)
+            while (isValidYear == false)
             {
                 Console.Write("\nГод выпуска: ");
 
-                if (!int.TryParse(Console.ReadLine(), out yearRelease) || yearRelease < 0 || yearRelease > DateTime.Now.Year)
+                if (int.TryParse(Console.ReadLine(), out yearRelease) == false || yearRelease < 0 || yearRelease > DateTime.Now.Year)
                 {
                     Console.WriteLine("Некорректный ввод для года выпуска. Пожалуйста, введите целое число.");
                 }
                 else
                 {
-                    validYear = true;
+                    isValidYear = true;
                 }
             }
 
             return yearRelease;
         }
 
-        private void ChooseBooksByParameter(string value, string booksValue, Book book)
+        private void ChooseBooksByTitle(string value, string booksTitle, Book book)
         {
-            if (value == booksValue.ToLower())
+            if (value == booksTitle.ToLower())
             {
                 book.ShowInfo();
+            }
+        }
+
+        private void ChooseBooksByAuthor(string value, string booksAuthor, Book book)
+        {
+            if (value == booksAuthor.ToLower())
+            {
+                book.ShowInfo();
+            }
+        }
+
+        private void ChooseBooksByYearRelease(string value, string booksYearRelease, Book book)
+        {
+            if (value == booksYearRelease.ToLower())
+            {
+                book.ShowInfo(); 
             }
         }
     }
