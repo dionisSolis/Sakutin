@@ -119,26 +119,23 @@ namespace qwerty
 
             Console.WriteLine("\nНайденные книги");
 
-            foreach (Book book in _books)
+            switch (parameter)
             {
-                switch (parameter)
-                {
-                    case ParameterTitle:
-                        ChooseBooksByTitle(value, book.Title, book);
-                        break;
+                case ParameterTitle:
+                    ChooseBooksByTitle(value);
+                    break;
 
-                    case ParameterAuthor:
-                        ChooseBooksByAuthor(value, book.Author, book);
-                        break;
+                case ParameterAuthor:
+                    ChooseBooksByAuthor(value);
+                    break;
 
-                    case ParameterYearRelease:
-                        ChooseBooksByYearRelease(value, book.YearRelease.ToString(), book);
-                        break;
+                case ParameterYearRelease:
+                    ChooseBooksByYearRelease(value);
+                    break;
 
-                    default:
-                        Console.WriteLine("Параметр не найден");
-                        return;
-                }
+                default:
+                    Console.WriteLine("Параметр не найден");
+                    return;
             }
         }
 
@@ -164,27 +161,36 @@ namespace qwerty
             return yearRelease;
         }
 
-        private void ChooseBooksByTitle(string value, string booksTitle, Book book)
+        private void ChooseBooksByTitle(string value)
         {
-            if (value == booksTitle.ToLower())
+            foreach (Book book in _books)
             {
-                book.ShowInfo();
+                if (value == book.Title.ToLower())
+                {
+                    book.ShowInfo();
+                }
             }
         }
 
-        private void ChooseBooksByAuthor(string value, string booksAuthor, Book book)
+        private void ChooseBooksByAuthor(string value)
         {
-            if (value == booksAuthor.ToLower())
+            foreach (Book book in _books)
             {
-                book.ShowInfo();
+                if (value == book.Author.ToLower())
+                {
+                    book.ShowInfo();
+                }
             }
         }
 
-        private void ChooseBooksByYearRelease(string value, string booksYearRelease, Book book)
+        private void ChooseBooksByYearRelease(string value)
         {
-            if (value == booksYearRelease.ToLower())
+            foreach (Book book in _books)
             {
-                book.ShowInfo(); 
+                if (value == book.YearRelease.ToString())
+                {
+                    book.ShowInfo();
+                }
             }
         }
     }
