@@ -76,7 +76,7 @@ namespace qwerty
             Console.Write("\nАвтор: ");
             string author = Console.ReadLine();
 
-            int yearRelease = InputCorrectYear();
+            int yearRelease = EnterCorrectYear();
 
             _books.Add(new Book(title, author, yearRelease));
         }
@@ -142,7 +142,7 @@ namespace qwerty
             }
         }
 
-        private int InputCorrectYear()
+        private int EnterCorrectYear()
         {
             int yearRelease = 0;
             bool isValidYear = false;
@@ -191,16 +191,16 @@ namespace qwerty
 
     class Book
     {
-        public string Title { get; private set; }
-        public string Author { get; private set; }
-        public int YearRelease { get; private set; }
-
         public Book(string title, string author, int yearRelease)
         {
             Title = title;
             Author = author;
             YearRelease = yearRelease;
         }
+
+        public string Title { get; private set; }
+        public string Author { get; private set; }
+        public int YearRelease { get; private set; }
 
         public void ShowInfo()
         {
