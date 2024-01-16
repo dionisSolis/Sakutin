@@ -1,0 +1,241 @@
+using System;
+using System.Diagnostics;
+using System.Numerics;
+namespace qwerty
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            const int MenuShowSellersInfo = 1;
+            const int MenuBuyItem = 2;
+            const int MenuShowPlayersInfo = 3;
+            const int MenuExit = 4;
+            const string pointer = "=>";
+
+            int cursor = 1;
+
+            bool isPlay = true;
+
+            Menu menu = new Menu();
+            Player player = new Player();
+            Seller seller = new Seller();
+
+//Значения добавлены для примера
+            seller.AddItem("Яблоко", 5); 
+            seller.AddItem("Меч", 20);
+            seller.AddItem("Кольчуга", 15);
+
+            while (isPlay)
+            {
+                Console.Write("М А Г А З И Н\n" +
+                $"  {MenuShowSellersInfo})Показать товары продавца\n" +
+                $"  {MenuBuyItem})Купить товар\n" +
+                $"  {MenuShowPlayersInfo})Показать информацию игрока\n" +
+                $"  {MenuExit})Выход\n" +
+                $"Используйте стрелки и Enter для выбора");
+
+                menu.ShowPointer(cursor, pointer);
+
+                if (menu.CheckSelectEnter(ref cursor, MenuShowSellersInfo, MenuExit) == true)
+                {
+                    switch (cursor)
+                    {
+                        case MenuShowSellersInfo:
+                            seller.ShowInfo();
+                            break;
+
+                        case MenuBuyItem:
+                            player.BuyItem(seller.SellItem(player.Money));
+                            break;
+
+                        case MenuShowPlayersInfo:
+                            player.ShowInfo();
+                            break;
+
+                        case MenuExit:
+                            isPlay = false;
+                            break;
+                    }
+
+                    Console.Write("\n\nНажмите любую кнопку для обновления...");
+                    Console.ReadKey();
+                }
+        
+                Console.Clear();
+            }
+        }
+    }
+
+    class Menu
+    {
+        public void ShowPointer(int cursor, string pointer)
+        {
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(0, cursor);
+            Console.Write(pointer);
+        }
+
+        public bool CheckSelectEnter(ref int cursor, int minPosition, int maxPosition)
+        {
+            switch (Console.ReadKey(true).Key)
+            {
+                case ConsoleKey.UpArrow:
+                    cursor--;
+                    cursor = CheckCursorPosition(cursor, minPosition, maxPosition);
+                    return false;
+
+                case ConsoleKey.DownArrow:
+                    cursor++;
+                    cursor = CheckCursorPosition(cursor, minPosition, maxPosition);
+                    return false;
+
+                case ConsoleKey.Enter:
+                    return true;
+            }
+
+            return false;
+        }
+
+        private int CheckCursorPosition(int cursor, int minPosition, int maxPosition)
+        {
+            if (cursor < minPosition)
+            {
+                return minPosition;
+            }
+            else if (cursor > maxPosition)
+            {
+                return maxPosition;
+            }
+
+            return cursor;
+        }
+    }
+
+    class Player
+    {
+        private List<Item> _items;
+
+        public Player() 
+        {
+            _items = new List<Item>();
+            Money = 25;
+        }
+
+        public int Money { get; private set; }
+
+        public void BuyItem(Item item)
+        {
+            if (item == null)
+            {
+                Console.WriteLine("Ошибка при покупке!");
+                return;
+            }
+
+            Money -= item.Price;
+            _items.Add(item);
+            Console.WriteLine("Успешно куплено!");
+        }
+
+        public void ShowInfo()
+        {
+            Console.Clear();
+
+            Console.WriteLine("И Г Р О К \nДеньги: " + Money + " Р.\nТовары:");
+
+            foreach(Item item in _items)
+            {
+                item.ShowInfo();
+            }
+        }
+    }
+
+    class Seller
+    {
+        private List<Item> _items;
+
+        public Seller()
+        {
+            _items = new List<Item>();
+        }
+
+        public void AddItem(string name, int price)
+        {
+            if (price < 0)
+            {
+                return;
+            }
+
+            _items.Add(new Item(name, price));
+        }
+
+        public Item SellItem(int moneyPlayers)
+        {
+            Console.CursorVisible = true;
+            Console.Clear();
+
+            if (_items.Count == 0)
+            {
+                Console.WriteLine("Товаров на продажу нет");
+                return null;
+            }
+
+            int index = EnterIndexItem();
+            Item item = _items[index];
+
+            if (moneyPlayers < item.Price)
+            {
+                Console.WriteLine("Недостаточно средств");
+                return null;
+            }
+
+            _items.RemoveAt(index);
+            return item;  
+        }
+        
+        public void ShowInfo()
+        {
+            Console.Clear();
+
+            Console.WriteLine("П Р О Д А В Е Ц\nТовары:");
+
+            for (int i = 1; i <= _items.Count; i++)
+            {
+                Console.Write(i + ")");
+                _items[i - 1].ShowInfo();
+            }
+        }
+
+        private int EnterIndexItem()
+        {
+            int number;
+
+            Console.Write("Введите номер товара: ");
+
+            while (int.TryParse(Console.ReadLine(), out number) == false || number <= 0 || number > _items.Count)
+            {
+                Console.Write("Введите корректный номер: ");
+            }
+
+            return number - 1;
+        }
+    }
+
+    class Item
+    {
+        private string _name;
+
+        public Item(string name, int price)
+        {
+            _name = name;
+            Price = price;
+        }
+
+        public int Price { get; private set; }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine(_name + " - " + Price + " Р.");
+        }
+    } 
+} 
