@@ -192,7 +192,13 @@ namespace qwerty
             Money = 25;
         }
 
-        public abstract void ShowInfo();
+        public void ShowInfo()
+        {
+            foreach (Item item in Items)
+            {
+                item.ShowInfo();
+            }
+        }
     }
 
     class Player : Person
@@ -207,24 +213,14 @@ namespace qwerty
 
         public bool CanPay(int price)
         {
-            if (Money >= price)
-            {
-                return true;
-            }
-
-            return false;
+            return Money >= price;
         }
 
-        public override void ShowInfo()
+        public void ShowInfo()
         {
             Console.Clear();
-
             Console.WriteLine("И Г Р О К \nДеньги: " + Money + " Р.\nТовары:");
-
-            foreach (Item item in Items)
-            {
-                item.ShowInfo();
-            }
+            base.ShowInfo();
         }
     }
 
@@ -252,16 +248,11 @@ namespace qwerty
             return Items[index];
         }
 
-        public override void ShowInfo()
+        public void ShowInfo()
         {
             Console.Clear();
-
             Console.WriteLine("П Р О Д А В Е Ц \nТовары:");
-
-            foreach (Item item in Items)
-            {
-                item.ShowInfo();
-            }
+            base.ShowInfo();
         }
 
         public int GetItemsCount()
