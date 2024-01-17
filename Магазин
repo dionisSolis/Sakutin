@@ -13,16 +13,14 @@ namespace qwerty
             const int MenuExit = 4;
             const string pointer = "=>";
 
-            int cursor = 1;
-
             bool isPlay = true;
 
-            Menu menu = new Menu();
+            Menu menu = new Menu(MenuShowSellersInfo, MenuExit);
             Player player = new Player();
             Seller seller = new Seller();
 
-//Значения добавлены для примера
-            seller.AddItem("Яблоко", 5); 
+            //Значения добавлены для примера
+            seller.AddItem("Яблоко", 5);
             seller.AddItem("Меч", 20);
             seller.AddItem("Кольчуга", 15);
 
@@ -35,18 +33,18 @@ namespace qwerty
                 $"  {MenuExit})Выход\n" +
                 $"Используйте стрелки и Enter для выбора");
 
-                menu.ShowPointer(cursor, pointer);
+                menu.ShowPointer();
 
-                if (menu.CheckSelectEnter(ref cursor, MenuShowSellersInfo, MenuExit) == true)
+                if (menu.IsSelectEnter() == true)
                 {
-                    switch (cursor)
+                    switch (menu.Cursor)
                     {
                         case MenuShowSellersInfo:
                             seller.ShowInfo();
                             break;
 
                         case MenuBuyItem:
-                            player.BuyItem(seller.SellItem(player.Money));
+                            Purchase purchase = new Purchase(player, seller);
                             break;
 
                         case MenuShowPlayersInfo:
@@ -61,7 +59,7 @@ namespace qwerty
                     Console.Write("\n\nНажмите любую кнопку для обновления...");
                     Console.ReadKey();
                 }
-        
+
                 Console.Clear();
             }
         }
@@ -69,25 +67,39 @@ namespace qwerty
 
     class Menu
     {
-        public void ShowPointer(int cursor, string pointer)
+        private int _firstCursorPosition;
+        private int _lastCursorPostion;
+        private string _pointer;
+
+        public Menu(int firstCursorPosition, int lastCursorPostion)
         {
-            Console.CursorVisible = false;
-            Console.SetCursorPosition(0, cursor);
-            Console.Write(pointer);
+            Cursor = firstCursorPosition;
+            _firstCursorPosition = firstCursorPosition;
+            _pointer = "=>";
+            _lastCursorPostion = lastCursorPostion;
         }
 
-        public bool CheckSelectEnter(ref int cursor, int minPosition, int maxPosition)
+        public int Cursor { get; private set; }
+
+        public void ShowPointer()
+        {
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(0, Cursor);
+            Console.Write(_pointer);
+        }
+
+        public bool IsSelectEnter()
         {
             switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.UpArrow:
-                    cursor--;
-                    cursor = CheckCursorPosition(cursor, minPosition, maxPosition);
+                    Cursor--;
+                    ClampCursorPosition();
                     return false;
 
                 case ConsoleKey.DownArrow:
-                    cursor++;
-                    cursor = CheckCursorPosition(cursor, minPosition, maxPosition);
+                    Cursor++;
+                    ClampCursorPosition();
                     return false;
 
                 case ConsoleKey.Enter:
@@ -97,68 +109,129 @@ namespace qwerty
             return false;
         }
 
-        private int CheckCursorPosition(int cursor, int minPosition, int maxPosition)
+        private void ClampCursorPosition()
         {
-            if (cursor < minPosition)
+            if (Cursor < _firstCursorPosition)
             {
-                return minPosition;
+                Cursor = _firstCursorPosition;
             }
-            else if (cursor > maxPosition)
+            else if (Cursor > _lastCursorPostion)
             {
-                return maxPosition;
+                Cursor = _lastCursorPostion;
             }
-
-            return cursor;
         }
     }
 
-    class Player
+    class Purchase
     {
-        private List<Item> _items;
+        private Player _player;
+        private Seller _seller;
 
-        public Player() 
+        public Purchase(Player player, Seller seller)
         {
-            _items = new List<Item>();
+            _player = player;
+            _seller = seller;
+
+            TryPurchase();
+        }
+
+        private void TryPurchase()
+        {
+            Console.Clear();
+
+            Item item = SelectItem();
+
+            if (_player.CanPay(item.Price))
+            {
+                _player.BuyItem(item);
+                _seller.SellItem(item);
+                Console.WriteLine("Успешно приобретено");
+            }
+            else
+            {
+                Console.WriteLine("Недостаточно средств");
+            }
+        }
+
+        private Item SelectItem()
+        {
+            bool isPlay = true;
+
+            Item item = null;
+
+            int firstPositionCursor = 2;
+            Menu menuItems = new Menu(firstPositionCursor, _seller.GetItemsCount() + firstPositionCursor - 1);
+
+            while (isPlay == true)
+            {
+                _seller.ShowInfo();
+                Console.WriteLine("Выберите товар для покупки");
+                menuItems.ShowPointer();
+
+                if (menuItems.IsSelectEnter() == true)
+                {
+                    item = _seller.GetItem(menuItems.Cursor - firstPositionCursor);
+                    isPlay = false;
+
+                }
+
+                Console.Clear();
+            }
+
+            return item;
+        }
+    }
+
+    abstract class Person
+    {
+        protected List<Item> Items;
+        protected int Money;
+
+        public Person()
+        {
+            Items = new List<Item>();
             Money = 25;
         }
 
-        public int Money { get; private set; }
+        public abstract void ShowInfo();
+    }
+
+    class Player : Person
+    {
+        public Player() : base() { }
 
         public void BuyItem(Item item)
         {
-            if (item == null)
-            {
-                Console.WriteLine("Ошибка при покупке!");
-                return;
-            }
-
             Money -= item.Price;
-            _items.Add(item);
-            Console.WriteLine("Успешно куплено!");
+            Items.Add(item);
         }
 
-        public void ShowInfo()
+        public bool CanPay(int price)
+        {
+            if (Money >= price)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public override void ShowInfo()
         {
             Console.Clear();
 
             Console.WriteLine("И Г Р О К \nДеньги: " + Money + " Р.\nТовары:");
 
-            foreach(Item item in _items)
+            foreach (Item item in Items)
             {
                 item.ShowInfo();
             }
         }
     }
 
-    class Seller
+    class Seller : Person
     {
-        private List<Item> _items;
-
-        public Seller()
-        {
-            _items = new List<Item>();
-        }
-
+        public Seller() : base() { }
         public void AddItem(string name, int price)
         {
             if (price < 0)
@@ -166,58 +239,35 @@ namespace qwerty
                 return;
             }
 
-            _items.Add(new Item(name, price));
+            Items.Add(new Item(name, price));
         }
 
-        public Item SellItem(int moneyPlayers)
+        public void SellItem(Item item)
         {
-            Console.CursorVisible = true;
-            Console.Clear();
-
-            if (_items.Count == 0)
-            {
-                Console.WriteLine("Товаров на продажу нет");
-                return null;
-            }
-
-            int index = EnterIndexItem();
-            Item item = _items[index];
-
-            if (moneyPlayers < item.Price)
-            {
-                Console.WriteLine("Недостаточно средств");
-                return null;
-            }
-
-            _items.RemoveAt(index);
-            return item;  
+            Money += item.Price;
+            Items.Remove(item);
         }
-        
-        public void ShowInfo()
+
+        public Item GetItem(int index)
+        {
+            return Items[index];
+        }
+
+        public override void ShowInfo()
         {
             Console.Clear();
 
-            Console.WriteLine("П Р О Д А В Е Ц\nТовары:");
+            Console.WriteLine("П Р О Д А В Е Ц \nТовары:");
 
-            for (int i = 1; i <= _items.Count; i++)
+            foreach (Item item in Items)
             {
-                Console.Write(i + ")");
-                _items[i - 1].ShowInfo();
+                item.ShowInfo();
             }
         }
 
-        private int EnterIndexItem()
+        public int GetItemsCount()
         {
-            int number;
-
-            Console.Write("Введите номер товара: ");
-
-            while (int.TryParse(Console.ReadLine(), out number) == false || number <= 0 || number > _items.Count)
-            {
-                Console.Write("Введите корректный номер: ");
-            }
-
-            return number - 1;
+            return Items.Count;
         }
     }
 
@@ -231,11 +281,11 @@ namespace qwerty
             Price = price;
         }
 
-        public int Price { get; private set; }
+        public int Price { get; }
 
         public void ShowInfo()
         {
-            Console.WriteLine(_name + " - " + Price + " Р.");
+            Console.WriteLine("  " + _name + " - " + Price + " Р.");
         }
-    } 
-} 
+    }
+}
