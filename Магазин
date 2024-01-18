@@ -15,8 +15,10 @@ namespace qwerty
             bool isPlay = true;
 
             Menu menu = new Menu(MenuShowSellersInfo, MenuExit);
+
             Player player = new Player();
             Seller seller = new Seller();
+            Shop shop = new Shop(player, seller);
 
             //Значения добавлены для примера
             seller.AddItem("Яблоко", 5);
@@ -43,7 +45,7 @@ namespace qwerty
                             break;
 
                         case MenuBuyItem:
-                            Purchase purchase = new Purchase(player, seller);
+                            shop.TryPurchase();
                             break;
 
                         case MenuShowPlayersInfo:
@@ -121,20 +123,18 @@ namespace qwerty
         }
     }
 
-    class Purchase
+    class Shop
     {
         private Player _player;
         private Seller _seller;
 
-        public Purchase(Player player, Seller seller)
+        public Shop(Player player, Seller seller)
         {
             _player = player;
             _seller = seller;
-
-            TryPurchase();
         }
 
-        private void TryPurchase()
+        public void TryPurchase()
         {
             Console.Clear();
 
@@ -171,7 +171,6 @@ namespace qwerty
                 {
                     item = _seller.GetItem(menuItems.Cursor - firstPositionCursor);
                     isPlay = false;
-
                 }
 
                 Console.Clear();
@@ -192,7 +191,7 @@ namespace qwerty
             Money = 25;
         }
 
-        public void ShowInfo()
+        public virtual void ShowInfo()
         {
             foreach (Item item in Items)
             {
@@ -205,18 +204,18 @@ namespace qwerty
     {
         public Player() : base() { }
 
+        public bool CanPay(int price)
+        {
+            return Money >= price;
+        }
+
         public void BuyItem(Item item)
         {
             Money -= item.Price;
             Items.Add(item);
         }
 
-        public bool CanPay(int price)
-        {
-            return Money >= price;
-        }
-
-        public void ShowInfo()
+        public override void ShowInfo()
         {
             Console.Clear();
             Console.WriteLine("И Г Р О К \nДеньги: " + Money + " Р.\nТовары:");
@@ -227,6 +226,7 @@ namespace qwerty
     class Seller : Person
     {
         public Seller() : base() { }
+
         public void AddItem(string name, int price)
         {
             if (price < 0)
@@ -237,18 +237,18 @@ namespace qwerty
             Items.Add(new Item(name, price));
         }
 
+        public Item GetItem(int index)
+        {
+            return Items[index];
+        }
+        
         public void SellItem(Item item)
         {
             Money += item.Price;
             Items.Remove(item);
         }
 
-        public Item GetItem(int index)
-        {
-            return Items[index];
-        }
-
-        public void ShowInfo()
+        public override void ShowInfo()
         {
             Console.Clear();
             Console.WriteLine("П Р О Д А В Е Ц \nТовары:");
