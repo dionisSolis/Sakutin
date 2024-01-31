@@ -9,13 +9,15 @@ namespace qwerty
             const int MenuCreateDirection = 1;
             const int MenuCreateTrain = 2;
             const int MenuShowDirections = 3;
-            const int MenuRemoveDirection = 4;
-            const int MenuMoveToNextDay = 5;
+            const int MenuMoveToNextDay = 4;
+
+            const ConsoleKey KeyEnter = ConsoleKey.Enter;
+            const ConsoleKey KeyExit = ConsoleKey.Backspace;
 
             bool isPlay = true;
 
             RailwayStation railwayStation = new RailwayStation();
-            Menu menu = new Menu(1, 5);
+            Menu menu = new Menu(1, 4);
 
             while (isPlay == true)
             {
@@ -23,7 +25,6 @@ namespace qwerty
                     $"  {MenuCreateDirection})Создать направление\n" +
                     $"  {MenuCreateTrain})Сформировать поезд\n" +
                     $"  {MenuShowDirections})Показать направления\n" +
-                    $"  {MenuRemoveDirection})Удалить направление\n" +
                     $"  {MenuMoveToNextDay})Перейти к следующему дню\n" +
                     "Используйте стрелки для выбора, Enter для подтверждения, Backspace для выхода\n");
 
@@ -32,7 +33,7 @@ namespace qwerty
                 menu.ShowPointer();
                 ConsoleKey inputKey = menu.GetInputKey();
 
-                if (inputKey == ConsoleKey.Enter)
+                if (inputKey == KeyEnter)
                 {
                     Console.Clear();
 
@@ -50,10 +51,6 @@ namespace qwerty
                             railwayStation.ShowDirections();
                             break;
 
-                        case MenuRemoveDirection:
-                            railwayStation.RemoveDirection();
-                            break;
-
                         case MenuMoveToNextDay:
                             railwayStation.MoveToNextDay();
                             break;
@@ -62,11 +59,11 @@ namespace qwerty
                     Console.Write("\n\nНажмите любую кнопку для обновления...");
                     Console.ReadKey();
                 }
-                else if (inputKey == ConsoleKey.Backspace)
+                else if (inputKey == KeyExit)
                 {
                     isPlay = false;
                 }
-                
+
                 Console.Clear();
             }
         }
@@ -95,6 +92,11 @@ namespace qwerty
             Console.Write(_pointer);
         }
 
+        public void CorrectCursorPosition()
+        {
+            Cursor = _firstCursorPosition;
+        }
+
         public ConsoleKey GetInputKey()
         {
             ConsoleKey inputKey = Console.ReadKey(true).Key;
@@ -113,7 +115,7 @@ namespace qwerty
                     break;
 
                 case ConsoleKey.DownArrow:
-                    Cursor++;   
+                    Cursor++;
                     break;
             }
 
@@ -134,7 +136,7 @@ namespace qwerty
     }
 
     class RailwayStation
-    {   
+    {
         private List<string> _directions;
         private List<Train> _trains;
 
@@ -154,19 +156,6 @@ namespace qwerty
             }
         }
 
-        public void MoveToNextDay()
-        {
-            for (int i = 0; i < _trains.Count; i++)
-            {
-                _trains[i].Travel();
-
-                if (_trains[i].TravelTime == 0)
-                {
-                    _trains.Remove(_trains[i]);
-                }
-            }
-        }
-
         public void CreateDirection()
         {
             Console.CursorVisible = true;
@@ -180,28 +169,6 @@ namespace qwerty
             if (isCorrectDirection(departurePoint, arivalPoint) == true)
             {
                 _directions.Add(new string(departurePoint + " - " + arivalPoint));
-            }
-        }
-
-        public void RemoveDirection()
-        {
-            string direction = SelectDirections();
-
-            if (direction == null)
-            {
-                return;
-            }
-
-            _directions.Remove(direction);
-        }
-
-        public void ShowDirections()
-        {
-            Console.WriteLine("Направления ");
-
-            foreach (string direction in _directions)
-            {
-                Console.WriteLine("  " + direction);
             }
         }
 
@@ -219,7 +186,7 @@ namespace qwerty
             Train train = new Train(direction);
 
             int tickets = SellTickets();
-            
+
             while (train.TotalCapacity < tickets)
             {
                 Console.WriteLine("Текущая вместимость поезда: " + train.TotalCapacity + " чел.");
@@ -227,9 +194,32 @@ namespace qwerty
                 train.AddWagon();
                 Console.Clear();
             }
-             
+
             _trains.Add(train);
             Console.WriteLine("Поезд отправлен!");
+        }
+
+        public void ShowDirections()
+        {
+            Console.WriteLine("Направления ");
+
+            foreach (string direction in _directions)
+            {
+                Console.WriteLine("  " + direction);
+            }
+        }
+
+        public void MoveToNextDay()
+        {
+            for (int i = 0; i < _trains.Count; i++)
+            {
+                _trains[i].Travel();
+
+                if (_trains[i].TravelTime == 0)
+                {
+                    _trains.Remove(_trains[i]);
+                }
+            }
         }
 
         private bool isCorrectDirection(string departurePoint, string arivalPoint)
@@ -262,7 +252,7 @@ namespace qwerty
             string direction = "";
 
             while (isPlay)
-            { 
+            {
                 ShowDirections();
                 menuDirection.ShowPointer();
                 ConsoleKey inputKey = menuDirection.GetInputKey();
