@@ -302,7 +302,7 @@ namespace qwerty
 
         public void AddWagon()
         {
-            int capacity = EnterCapacity();
+            int capacity = ReadCapacity();
 
             _wagons.Add(new Wagon(capacity));
 
@@ -326,7 +326,7 @@ namespace qwerty
             TravelTime--;
         }
 
-        private int EnterCapacity()
+        private int ReadCapacity()
         {
             int capacity;
 
