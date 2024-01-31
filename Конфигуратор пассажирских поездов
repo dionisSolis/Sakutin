@@ -166,7 +166,7 @@ namespace qwerty
             Console.Write("Введите пункт прибытия: ");
             string arivalPoint = Console.ReadLine().ToUpper();
 
-            if (isCorrectDirection(departurePoint, arivalPoint) == true)
+            if (IsCorrectDirection(departurePoint, arivalPoint) == true)
             {
                 _directions.Add(new string(departurePoint + " - " + arivalPoint));
             }
@@ -222,7 +222,7 @@ namespace qwerty
             }
         }
 
-        private bool isCorrectDirection(string departurePoint, string arivalPoint)
+        private bool IsCorrectDirection(string departurePoint, string arivalPoint)
         {
             if (departurePoint == arivalPoint)
             {
